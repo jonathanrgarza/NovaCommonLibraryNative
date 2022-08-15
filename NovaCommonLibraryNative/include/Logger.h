@@ -9,6 +9,7 @@
 #include <cstdarg>
 #include <string>
 #include <iostream>
+#include <memory>
 
 namespace Ncl
 {
@@ -56,10 +57,10 @@ namespace Ncl
         /// \param lineNumber The line number associated with the message. -1 disables it inclusion. Default: -1
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
-        virtual void log(char* message, size_t messageSize, LogLevel level = LogLevel::INFO, 
-                         char* functionName = nullptr, size_t functionNameSize = 0, 
+        virtual void log(const char* message, size_t messageSize, LogLevel level = LogLevel::INFO,
+                         const char* functionName = nullptr, size_t functionNameSize = 0,
                          int32_t lineNumber = -1,
-                         char* fileName = nullptr, size_t fileNameSize = 0) = 0;
+                         const char* fileName = nullptr, size_t fileNameSize = 0) = 0;
         /// \brief Logs a message.
         /// \param message The message.
         /// \param level The log level for the message.
@@ -69,9 +70,9 @@ namespace Ncl
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         virtual void log(const std::string& message, LogLevel level = LogLevel::INFO,
-                         char* functionName = nullptr, size_t functionNameSize = 0,
+                         const char* functionName = nullptr, size_t functionNameSize = 0,
                          int32_t lineNumber = -1,
-                         char* fileName = nullptr, size_t fileNameSize = 0) = 0;
+                         const char* fileName = nullptr, size_t fileNameSize = 0) = 0;
 
         /// \brief Logs a formatted message.
         /// \param level The log level for the message.
@@ -83,9 +84,9 @@ namespace Ncl
         /// \param format The C-string format string.
         /// \param formatSize The format buffer size.
         /// \param args The variable arguments.
-        virtual void logf(LogLevel level, char* functionName, size_t functionNameSize,
-                          int32_t lineNumber, char* fileName, size_t fileNameSize,
-                          char* format, size_t formatSize, va_list args) = 0;
+        virtual void logf(LogLevel level, const char* functionName, size_t functionNameSize,
+                          int32_t lineNumber, const char* fileName, size_t fileNameSize,
+                          const char* format, size_t formatSize, va_list args) = 0;
         /// \brief Logs a formatted message.
         /// \param level The log level for the message.
         /// \param functionName The C-string function name. nullptr disables its inclusion. Default: nullptr
@@ -95,15 +96,15 @@ namespace Ncl
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         /// \param format The format string.
         /// \param args The variable arguments.
-        virtual void logf(LogLevel level, char* functionName, size_t functionNameSize,
-                          int32_t lineNumber, char* fileName, size_t fileNameSize,
+        virtual void logf(LogLevel level, const char* functionName, size_t functionNameSize,
+                          int32_t lineNumber, const char* fileName, size_t fileNameSize,
                           const std::string& format, va_list args) = 0;
         /// \brief Logs a formatted message.
         /// \param level The log level for the message.
         /// \param format The C-string format string.
         /// \param formatSize The format buffer size.
         /// \param args The variable arguments.
-        virtual void logf(LogLevel level, char* format, size_t formatSize, va_list args) = 0;
+        virtual void logf(LogLevel level, const char* format, size_t formatSize, va_list args) = 0;
         /// \brief Logs a formatted message.
         /// \param level The log level for the message.
         /// \param format The format string.
@@ -119,9 +120,9 @@ namespace Ncl
         /// \param format The C-string format string.
         /// \param formatSize The format buffer size.
         /// \param ... The variable arguments.
-        virtual void logf(LogLevel level, char* functionName, size_t functionNameSize,
-                         int32_t lineNumber, char* fileName, size_t fileNameSize,
-                         char* format, size_t formatSize, ...) = 0;
+        virtual void logf(LogLevel level, const char* functionName, size_t functionNameSize,
+                         int32_t lineNumber, const char* fileName, size_t fileNameSize,
+                         const char* format, size_t formatSize, ...) = 0;
         /// \brief Logs a formatted message.
         /// \param level The log level for the message.
         /// \param functionName The C-string function name. nullptr disables its inclusion. Default: nullptr
@@ -131,8 +132,8 @@ namespace Ncl
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         /// \param format The format string.
         /// \param ... The variable arguments.
-        virtual void logf(LogLevel level, char* functionName, size_t functionNameSize,
-                          int32_t lineNumber, char* fileName, size_t fileNameSize,
+        virtual void logf(LogLevel level, const char* functionName, size_t functionNameSize,
+                          int32_t lineNumber, const char* fileName, size_t fileNameSize,
                           const std::string& format, ...) = 0;
         /// \brief Logs a formatted message.
         /// \param level The log level for the message.
@@ -155,9 +156,9 @@ namespace Ncl
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         void trace(char* message, size_t messageSize,
-                           char* functionName = nullptr, size_t functionNameSize = 0,
-                           int32_t lineNumber = -1,
-                           char* fileName = nullptr, size_t fileNameSize = 0)
+                   const char* functionName = nullptr, size_t functionNameSize = 0,
+                   int32_t lineNumber = -1,
+                   const char* fileName = nullptr, size_t fileNameSize = 0)
         {
             log(message, messageSize, LogLevel::TRACE, 
                 functionName, functionNameSize,
@@ -171,9 +172,9 @@ namespace Ncl
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         void trace(const std::string& message,
-                           char* functionName = nullptr, size_t functionNameSize = 0,
-                           int32_t lineNumber = -1,
-                           char* fileName = nullptr, size_t fileNameSize = 0)
+                   const char* functionName = nullptr, size_t functionNameSize = 0,
+                   int32_t lineNumber = -1,
+                   const char* fileName = nullptr, size_t fileNameSize = 0)
         {
             log(message,LogLevel::TRACE,
                 functionName, functionNameSize,
@@ -188,9 +189,9 @@ namespace Ncl
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         void debug(char* message, size_t messageSize,
-                           char* functionName = nullptr, size_t functionNameSize = 0,
-                           int32_t lineNumber = -1,
-                           char* fileName = nullptr, size_t fileNameSize = 0)
+                   const char* functionName = nullptr, size_t functionNameSize = 0,
+                   int32_t lineNumber = -1,
+                   const char* fileName = nullptr, size_t fileNameSize = 0)
         {
             log(message, messageSize, LogLevel::DEBUG,
                 functionName, functionNameSize,
@@ -204,9 +205,9 @@ namespace Ncl
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         void debug(const std::string& message,
-                           char* functionName = nullptr, size_t functionNameSize = 0,
-                           int32_t lineNumber = -1,
-                           char* fileName = nullptr, size_t fileNameSize = 0)
+                   const char* functionName = nullptr, size_t functionNameSize = 0,
+                   int32_t lineNumber = -1,
+                   const char* fileName = nullptr, size_t fileNameSize = 0)
         {
             log(message,LogLevel::DEBUG,
                 functionName, functionNameSize,
@@ -221,9 +222,9 @@ namespace Ncl
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         void info(char* message, size_t messageSize,
-                           char* functionName = nullptr, size_t functionNameSize = 0,
-                           int32_t lineNumber = -1,
-                           char* fileName = nullptr, size_t fileNameSize = 0)
+                  const char* functionName = nullptr, size_t functionNameSize = 0,
+                  int32_t lineNumber = -1,
+                  const char* fileName = nullptr, size_t fileNameSize = 0)
         {
             log(message, messageSize, LogLevel::INFO,
                 functionName, functionNameSize,
@@ -237,9 +238,9 @@ namespace Ncl
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         void info(const std::string& message,
-                           char* functionName = nullptr, size_t functionNameSize = 0,
-                           int32_t lineNumber = -1,
-                           char* fileName = nullptr, size_t fileNameSize = 0)
+                  const char* functionName = nullptr, size_t functionNameSize = 0,
+                  int32_t lineNumber = -1,
+                  const char* fileName = nullptr, size_t fileNameSize = 0)
         {
             log(message,LogLevel::INFO,
                 functionName, functionNameSize,
@@ -254,9 +255,9 @@ namespace Ncl
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         void warn(char* message, size_t messageSize,
-                          char* functionName = nullptr, size_t functionNameSize = 0,
-                          int32_t lineNumber = -1,
-                          char* fileName = nullptr, size_t fileNameSize = 0)
+                  const char* functionName = nullptr, size_t functionNameSize = 0,
+                  int32_t lineNumber = -1,
+                  const char* fileName = nullptr, size_t fileNameSize = 0)
         {
             log(message, messageSize, LogLevel::WARN,
                 functionName, functionNameSize,
@@ -270,9 +271,9 @@ namespace Ncl
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         void warn(const std::string& message,
-                          char* functionName = nullptr, size_t functionNameSize = 0,
-                          int32_t lineNumber = -1,
-                          char* fileName = nullptr, size_t fileNameSize = 0)
+                  const char* functionName = nullptr, size_t functionNameSize = 0,
+                  int32_t lineNumber = -1,
+                  const char* fileName = nullptr, size_t fileNameSize = 0)
         {
             log(message,LogLevel::WARN,
                 functionName, functionNameSize,
@@ -287,9 +288,9 @@ namespace Ncl
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         void error(char* message, size_t messageSize,
-                          char* functionName = nullptr, size_t functionNameSize = 0,
-                          int32_t lineNumber = -1,
-                          char* fileName = nullptr, size_t fileNameSize = 0)
+                   const char* functionName = nullptr, size_t functionNameSize = 0,
+                   int32_t lineNumber = -1,
+                   const char* fileName = nullptr, size_t fileNameSize = 0)
         {
             log(message, messageSize, LogLevel::ERROR,
                 functionName, functionNameSize,
@@ -303,9 +304,9 @@ namespace Ncl
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         void error(const std::string& message,
-                          char* functionName = nullptr, size_t functionNameSize = 0,
-                          int32_t lineNumber = -1,
-                          char* fileName = nullptr, size_t fileNameSize = 0)
+                   const char* functionName = nullptr, size_t functionNameSize = 0,
+                   int32_t lineNumber = -1,
+                   const char* fileName = nullptr, size_t fileNameSize = 0)
         {
             log(message,LogLevel::ERROR,
                 functionName, functionNameSize,
@@ -319,10 +320,10 @@ namespace Ncl
         /// \param lineNumber The line number associated with the message. -1 disables it inclusion. Default: -1
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
-        void fatal(char* message, size_t messageSize,
-                           char* functionName = nullptr, size_t functionNameSize = 0,
+        void fatal(const char* message, size_t messageSize,
+                           const char* functionName = nullptr, size_t functionNameSize = 0,
                            int32_t lineNumber = -1,
-                           char* fileName = nullptr, size_t fileNameSize = 0)
+                           const char* fileName = nullptr, size_t fileNameSize = 0)
         {
             log(message, messageSize, LogLevel::FATAL,
                 functionName, functionNameSize,
@@ -336,9 +337,9 @@ namespace Ncl
         /// \param fileName The C-string file name. nullptr disables its inclusion. Default: nullptr
         /// \param fileNameSize The C-string file name size. 0 disables its inclusion. Default: 0
         void fatal(const std::string& message,
-                           char* functionName = nullptr, size_t functionNameSize = 0,
-                           int32_t lineNumber = -1,
-                           char* fileName = nullptr, size_t fileNameSize = 0)
+                   const char* functionName = nullptr, size_t functionNameSize = 0,
+                   int32_t lineNumber = -1,
+                   const char* fileName = nullptr, size_t fileNameSize = 0)
         {
             log(message,LogLevel::FATAL,
                 functionName, functionNameSize,
@@ -358,16 +359,18 @@ namespace Ncl
         FileLogger();
 
 #if defined(_WIN32) || defined(_WIN64)
-        FileLogger(std::string name, std::string version, std::string logPath, 
+        FileLogger(const std::string& name, const std::string& version, const std::string& logPath,
                bool includeConsoleOutput = false, bool includeDebugOutput = false);
 #else
-        FileLogger(std::string name, std::string version, std::string logPath,
+        FileLogger(const std::string& name, const std::string& version, const std::string& logPath,
                    bool includeConsoleOutput = false);
 #endif
         //Properties
-        
+
         //End Properties
-        
+
+        void log(const char *message, size_t messageSize, Ncl::LogLevel level = LogLevel::INFO, const char *functionName = nullptr, size_t functionNameSize = 0, int32_t lineNumber = -1, const char *fileName = nullptr, size_t fileNameSize = 0) override;
+
     private:
         std::string _name;
         std::string _version;
@@ -379,7 +382,7 @@ namespace Ncl
 #if defined(_WIN32) || defined(_WIN64)
         bool _includeDebugOutput;
 #endif
-        
+
     };
 } // Ncl
 
