@@ -109,13 +109,5 @@
         "CMAKE_BUILD_TYPE": "Release"
       }
     }
-  ],
-  "buildPresets": [
-    {
-      "name": "buildPresets",
-      "displayName": "Custom build preset",
-      "description": "Custom build preset description",
-      "configurePreset": "linux-debug"
-    }
   ]
 }
