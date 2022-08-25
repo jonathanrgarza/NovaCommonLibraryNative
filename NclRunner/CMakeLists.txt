@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Declare Sources and Headers
 
 SET(SOURCES
- "${PROJECT_SOURCE_DIR}/main.cpp"
+        "main.cpp"
 )
 
 #source_group("Sources" FILES ${SOURCES})

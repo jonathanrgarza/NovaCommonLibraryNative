@@ -4,18 +4,20 @@
 set(PROJ_NAME NovaCommonLibraryNative)
 project(${PROJ_NAME} VERSION 0.1)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
 # Declare Sources and Headers
 
 SET(HEADERS
-  "${PROJECT_SOURCE_DIR}/include/OSConstants.h"
-  "${PROJECT_SOURCE_DIR}/include/Library.h"
-  "${PROJECT_SOURCE_DIR}/include/Logger.h"
-)
+        "include/OSConstants.h"
+        "include/Library.h"
+        "include/Logger.h"
+        include/FileLogger.h)
 
 SET(SOURCES
-  "${PROJECT_SOURCE_DIR}/src/Library.cpp"
-  "${PROJECT_SOURCE_DIR}/src/Logger.cpp"
-)
+        "src/Library.cpp"
+        "src/FileLogger.cpp")
 
 #source_group("Headers" FILES ${HEADERS})
 #source_group("Sources" FILES ${SOURCES})
