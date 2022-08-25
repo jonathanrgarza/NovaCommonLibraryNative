@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.22)
-project(NovaCommonLibraryNative)
+
+# set the project name and version
+project(NovaCommonLibraryNative VERSION 0.1)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Create the static library NCL project
-set(NCL_Lib NovaCommonLibraryNative)
-add_library(${NCL_Lib} STATIC NovaCommonLibraryNative/src/Library.cpp NovaCommonLibraryNative/src/Logger.cpp)
-target_include_directories(${NCL_Lib} PRIVATE NovaCommonLibraryNative/include)
+# add the NCLN library
+add_subdirectory(NovaCommonLibraryNative)
 
 # Create the runner project
 set(APP_EXE NclRunner)
