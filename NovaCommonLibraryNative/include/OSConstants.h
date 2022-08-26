@@ -5,19 +5,21 @@
 #ifndef NOVACOMMONLIBRARYNATIVE_OSCONSTANTS_H
 #define NOVACOMMONLIBRARYNATIVE_OSCONSTANTS_H
 
-//Possible OS (Platforms) values: __WINDOWS__, __POSIX_WINDOWS__, __ANDROID__, __LINUX__, __UNIX__, __BSD__,
-// __IOS__, __MACOS__
+#include <cstddef> //Includes std::size_t
 
-//Possible instruction set architecture values: __x64__, __x86__, __ARM64__, __ARM32__
+//Possible OS (Platforms) values: OS_WINDOWS, OS_POSIX_WINDOWS, OS_ANDROID, OS_LINUX, OS_UNIX, OS_BSD,
+// OS_IOS, OS_MACOS
 
-//Possible instruction set architecture platform values: __INTEL_AMD__, __ARM__
+//Possible instruction set architecture values: ARCH_X64, ARCH_X86, ARCH_ARM64, ARCH_ARM32
+
+//Possible instruction set architecture platform values: ARCH_FAM_INTEL_AMD, ARCH_FAM_ARM
 
 //Determine the current OS (Platform) being built for
-#if defined(_WIN32) || defined(_WIN63) //Windows
+#if defined(_WIN32) || defined(_WIN64) //Windows
     /**
      * Determines that the target platform is Windows
      */
-    #define __WINDOWS__
+    #define OS_WINDOWS
 
     /**
      * The name of the current platform.
@@ -31,11 +33,11 @@
     /**
      * Determines that the target platform is POSIX for Windows
      */
-    #define __POSIX_WINDOWS__
+    #define OS_POSIX_WINDOWS
     /**
      * Determines that the target platform is UNIX
      */
-    #define __UNIX__
+    #define OS_UNIX
 
     /**
      * The name of the current platform.
@@ -49,7 +51,7 @@
     /**
      * Determines that the target platform is Android
      */
-    #define __ANDROID__
+    #define OS_ANDROID
 
     /**
      * The name of the current platform.
@@ -63,7 +65,7 @@
     /**
      * Determines that the target platform is Linux
      */
-    #define __LINUX__
+    #define OS_LINUX
 
     /**
      * The name of the current platform.
@@ -77,7 +79,7 @@
     /**
      * Determines that the target platform is UNIX
      */
-    #define __UNIX__
+    #define OS_UNIX
 
     //Check if platform is also BSD
     #include <sys/param.h>
@@ -85,7 +87,7 @@
         /**
          * Determines that the target platform is BSD
          */
-        #define __BSD__ // FreeBSD, NetBSD, OpenBSD, DragonFly BSD
+        #define OS_BSD // FreeBSD, NetBSD, OpenBSD, DragonFly BSD
 
         /**
          * The name of the current platform.
@@ -111,22 +113,22 @@
         /**
          * Determines that the target platform is iOS
          */
-        #define __IOS__ // Apple iOS
+        #define OS_IOS // Apple iOS
     #elif TARGET_OS_IPHONE == 1
         /**
          * Determines that the target platform is iOS
          */
-        #define __IOS__ // Apple iOS
+        #define OS_IOS // Apple iOS
     #elif TARGET_OS_MAC == 1
         /**
          * Determines that the target platform is macOS
          */
-        #define __MACOS__ // Apple OSX
+        #define OS_MACOS // Apple OSX
     #else
         #error "Unsupported target Apple platform"
     #endif
 
-    #ifdef __IOS__
+    #ifdef OS_IOS
         /**
          * The name of the current platform.
          */
@@ -135,7 +137,7 @@
          * The size of the platform name.
          */
         constexpr size_t PLATFORM_NAME_SIZE = sizeof(PLATFORM_NAME);
-    #elif defined(__MACOS__)
+    #elif defined(OS_MACOS)
         /**
          * The name of the current platform.
          */
@@ -150,43 +152,43 @@
 #endif
 
 //Determine the instruction set architecture
-#ifdef __WINDOWS__
+#ifdef OS_WINDOWS
     #ifdef _WIN64
         /**
          * Determines that the target architecture is x64 (64-bit)
          */
-        #define __x64__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_X64
         /**
          * Determines that the target architecture platform is Intel_AMD
          */
-        #define __INTEL_AMD__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_FAM_INTEL_AMD
     #elif defined(_WIN32)
         /**
          * Determines that the target architecture is x86 (32-bit)
          */
-        #define __x86__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_X86
         /**
          * Determines that the target architecture platform is Intel_AMD
          */
-        #define __INTEL_AMD__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_FAM_INTEL_AMD
     #elif defined(_M_ARM64)
         /**
          * Determines that the target architecture is ARM64 (64-bit)
          */
-        #define __ARM64__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_ARM64
         /**
          * Determines that the target architecture platform is ARM
          */
-        #define __ARM__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_FAM_ARM
     #elif defined(_M_ARM)
         /**
          * Determines that the target architecture is ARM32 (32-bit)
          */
-        #define __ARM32__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_ARM32
         /**
          * Determines that the target architecture platform is ARM
          */
-        #define __ARM__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_FAM_ARM
     #else
         #error "Unsupported instruction set architecture"
     #endif
@@ -195,38 +197,38 @@
         /**
          * Determines that the target architecture is x64 (64-bit)
          */
-        #define __x64__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_X64
         /**
          * Determines that the target architecture platform is Intel_AMD
          */
-        #define __INTEL_AMD__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_FAM_INTEL_AMD
     #elif defined(__i386__) || defined(_M_IX86)
         /**
          * Determines that the target architecture is x86 (32-bit)
          */
-        #define __x86__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_X86
         /**
          * Determines that the target architecture platform is Intel_AMD
          */
-        #define __INTEL_AMD__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_FAM_INTEL_AMD
     #elif defined(__aarch64__) || defined(_M_ARM64)
         /**
          * Determines that the target architecture is ARM64 (64-bit)
          */
-        #define __ARM64__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_ARM64
         /**
          * Determines that the target architecture platform is ARM
          */
-        #define __ARM__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_FAM_ARM
     #elif defined(__arm__) || defined(_M_ARM)
         /**
          * Determines that the target architecture is ARM32 (32-bit)
          */
-        #define __ARM32__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_ARM32
         /**
          * Determines that the target architecture platform is ARM
          */
-        #define __ARM__ // NOLINT(bugprone-reserved-identifier)
+        #define ARCH_FAM_ARM
     #else
         #error "Unsupported instruction set architecture"
     #endif
