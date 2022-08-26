@@ -153,7 +153,7 @@
 
 //Determine the instruction set architecture
 #ifdef OS_WINDOWS
-    #ifdef _WIN64
+    #if defined(_WIN64) || defined(__x86_64__) || defined(_M_X64)
         /**
          * Determines that the target architecture is x64 (64-bit)
          */
@@ -162,7 +162,7 @@
          * Determines that the target architecture platform is Intel_AMD
          */
         #define ARCH_FAM_INTEL_AMD
-    #elif defined(_WIN32)
+    #elif defined(_WIN32) || defined(__i386__) || defined(_M_IX86)
         /**
          * Determines that the target architecture is x86 (32-bit)
          */
@@ -171,7 +171,7 @@
          * Determines that the target architecture platform is Intel_AMD
          */
         #define ARCH_FAM_INTEL_AMD
-    #elif defined(_M_ARM64)
+    #elif defined(_M_ARM64) || defined(__aarch64__)
         /**
          * Determines that the target architecture is ARM64 (64-bit)
          */
@@ -180,7 +180,7 @@
          * Determines that the target architecture platform is ARM
          */
         #define ARCH_FAM_ARM
-    #elif defined(_M_ARM)
+    #elif defined(_M_ARM) || defined(__arm__)
         /**
          * Determines that the target architecture is ARM32 (32-bit)
          */
