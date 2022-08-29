@@ -17,6 +17,10 @@
 
 //Possible instruction set architecture platform values: NCL_ARCH_FAM_INTEL_AMD, NCL_ARCH_FAM_ARM
 
+namespace NCL
+{
+
+
 //Determine the current OS (Platform) being built for
 #if defined(_WIN32) || defined(_WIN64) //Windows
     /**
@@ -111,7 +115,9 @@
         constexpr size_t PLATFORM_NAME_SIZE = sizeof(PLATFORM_NAME);
     #endif
 #elif defined(__APPLE__) && defined(__MACH__) // Apple OSX and iOS (Darwin)
+
     #include <TargetConditionals.h>
+
     #if TARGET_IPHONE_SIMULATOR == 1
         /**
          * Determines that the target platform is iOS
@@ -144,7 +150,7 @@
         /**
          * The name of the current platform.
          */
-        constexpr char PLATFORM_NAME[] = "macOS";
+        constexpr char PLATFORM_NAME[]    = "macOS";
         /**
          * The size of the platform name.
          */
@@ -236,8 +242,10 @@
         #error "Unsupported instruction set architecture"
     #endif
 #endif
-        
+
 #pragma clang diagnostic pop
+
+}
         
 #endif //NOVACOMMONLIBRARYNATIVE_OSCONSTANTS_H
         
