@@ -13,11 +13,11 @@ SET(HEADERS
         "include/OSConstants.h"
         "include/Library.h"
         "include/Logger.h"
-        include/FileLogger.h)
+        include/FileLogger.h include/StringUtils.h)
 
 SET(SOURCES
         "src/Library.cpp"
-        "src/FileLogger.cpp")
+        "src/FileLogger.cpp" src/StringUtils.cpp)
 
 #source_group("Headers" FILES ${HEADERS})
 #source_group("Sources" FILES ${SOURCES})

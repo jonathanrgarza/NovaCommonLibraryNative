@@ -7,18 +7,19 @@
 
 #include "Logger.h"
 
+#include <iostream>
+#include <memory>
+
 namespace Ncl {
-/// \brief A logger which primarly logs to a file.
+    /// \brief A logger which primarly logs to a file.
     class FileLogger : Logger {
     public:
         /// \brief Initializes a new instance of FileLogger.
         FileLogger();
 
 #if defined(_WIN32) || defined(_WIN64)
-
         FileLogger(const std::string &name, const std::string &version, const std::string &logPath,
                    bool includeConsoleOutput = false, bool includeDebugOutput = false);
-
 #else
         FileLogger(const std::string& name, const std::string& version, const std::string& logPath,
                        bool includeConsoleOutput = false);

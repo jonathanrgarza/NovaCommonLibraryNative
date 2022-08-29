@@ -8,8 +8,6 @@
 #include <cstdint>
 #include <cstdarg>
 #include <string>
-#include <iostream>
-#include <memory>
 
 namespace Ncl
 {
