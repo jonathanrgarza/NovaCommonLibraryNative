@@ -31,7 +31,7 @@ namespace NCL
     /**
      * The name of the current platform.
      */
-    constexpr char PLATFORM_NAME[] = "Windows";
+    constexpr const char PLATFORM_NAME[] = "Windows";
     /**
      * The size of the platform name.
      */
@@ -49,7 +49,7 @@ namespace NCL
     /**
      * The name of the current platform.
      */
-    constexpr char PLATFORM_NAME[] = "Windows";
+    constexpr const char PLATFORM_NAME[] = "Windows";
     /**
      * The size of the platform name.
      */
@@ -63,7 +63,7 @@ namespace NCL
     /**
      * The name of the current platform.
      */
-    constexpr char PLATFORM_NAME[] = "Android";
+    constexpr const char PLATFORM_NAME[] = "Android";
     /**
      * The size of the platform name.
      */
@@ -77,7 +77,7 @@ namespace NCL
     /**
      * The name of the current platform.
      */
-    constexpr char PLATFORM_NAME[] = "Linux";
+    constexpr const char PLATFORM_NAME[] = "Linux";
     /**
      * The size of the platform name.
      */
@@ -99,7 +99,7 @@ namespace NCL
         /**
          * The name of the current platform.
          */
-        constexpr char PLATFORM_NAME[] = "BSD";
+        constexpr const char PLATFORM_NAME[] = "BSD";
         /**
          * The size of the platform name.
          */
@@ -108,7 +108,7 @@ namespace NCL
         /**
          * The name of the current platform.
          */
-        constexpr char PLATFORM_NAME[] = "UNIX";
+        constexpr const char PLATFORM_NAME[] = "UNIX";
         /**
          * The size of the platform name.
          */
@@ -141,7 +141,7 @@ namespace NCL
         /**
          * The name of the current platform.
          */
-        constexpr char PLATFORM_NAME[] = "iOS";
+        constexpr const char PLATFORM_NAME[] = "iOS";
         /**
          * The size of the platform name.
          */
@@ -150,7 +150,7 @@ namespace NCL
         /**
          * The name of the current platform.
          */
-        constexpr char PLATFORM_NAME[]    = "macOS";
+        constexpr const char PLATFORM_NAME[]    = "macOS";
         /**
          * The size of the platform name.
          */

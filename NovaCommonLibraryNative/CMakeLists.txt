@@ -10,14 +10,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Declare Sources and Headers
 
 SET(HEADERS
-        "include/OSConstants.h"
-        "include/Library.h"
-        "include/Logger.h"
-        include/FileLogger.h include/StringUtils.h)
+        include/OSConstants.h
+        include/Library.h
+        include/Logger.h
+        include/FileLogger.h
+        include/StringUtils.h
+        include/Macros.h)
 
 SET(SOURCES
-        "src/Library.cpp"
-        "src/FileLogger.cpp" src/StringUtils.cpp)
+        src/Library.cpp
+        src/FileLogger.cpp
+        src/StringUtils.cpp)
 
 #source_group("Headers" FILES ${HEADERS})
 #source_group("Sources" FILES ${SOURCES})

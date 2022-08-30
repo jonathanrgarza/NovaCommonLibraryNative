@@ -5,6 +5,10 @@
 #ifndef NOVACOMMONLIBRARYNATIVE_STRINGUTILS_H
 #define NOVACOMMONLIBRARYNATIVE_STRINGUTILS_H
 
+#include <cstdlib>
+#include <string>
+#include "Macros.h"
+
 namespace NCL
 {
 
@@ -16,7 +20,7 @@ namespace NCL
     /**
      * The new line character(s) for the platform.
      */
-    constexpr char NEWLINE[] = "\r\n";
+    constexpr const char NEWLINE[] = "\r\n";
     /**
      * The size of the new line character(s).
      */
@@ -27,7 +31,7 @@ namespace NCL
     /**
      * The new line character(s) for the platform.
      */
-    constexpr char NEWLINE[] = "\n";
+    constexpr const char NEWLINE[] = "\n";
     /**
      * The size of the new line character(s).
      */
@@ -38,7 +42,7 @@ namespace NCL
     /**
      * The new line character(s) for the platform.
      */
-    constexpr char NEWLINE[] = "\n";
+    constexpr const char NEWLINE[] = "\n";
     /**
      * The size of the new line character(s).
      */
@@ -49,7 +53,7 @@ namespace NCL
     /**
      * The new line character(s) for the platform.
      */
-    constexpr char NEWLINE[] = "\n";
+    constexpr const char NEWLINE[] = "\n";
     /**
      * The size of the new line character(s).
      */
@@ -60,7 +64,7 @@ namespace NCL
     /**
      * The new line character(s) for the platform.
      */
-    constexpr char NEWLINE[] = "\n";
+    constexpr const char NEWLINE[] = "\n";
     /**
      * The size of the new line character(s).
      */
@@ -68,55 +72,97 @@ namespace NCL
 
 #elif defined(__APPLE__) && defined(__MACH__) // Apple OSX and iOS (Darwin)
 
-#include <TargetConditionals.h>
-#include <cstdlib>
-#include <string>
+    #include <TargetConditionals.h>
+    
+    #if TARGET_IPHONE_SIMULATOR == 1 || TARGET_OS_IPHONE == 1
+        /**
+         * The new line character(s) for the platform.
+         */
+        constexpr const char NEWLINE[] = "\n";
+        /**
+         * The size of the new line character(s).
+         */
+        constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
+    #elif TARGET_OS_MAC == 1
+        /**
+         * The new line character(s) for the platform.
+         */
+        constexpr const char NEWLINE[] = "\n";
+        /**
+         * The size of the new line character(s).
+         */
+        constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
+    #else
+        
+        #warning "Unsupported target Apple platform for New Line array, using default value"
+        
+        /**
+         * The new line character(s) for the platform.
+         */
+        constexpr const char NEWLINE[] = "\n";
+        /**
+         * The size of the new line character(s).
+         */
+        constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
+        
+    #endif
 
-#if TARGET_IPHONE_SIMULATOR == 1 || TARGET_OS_IPHONE == 1
-    //TODO Confirm iPhone OS new line character for sure
-    /**
-     * The new line character(s) for the platform.
-     */
-    constexpr char NEWLINE[] = "\n";
-    /**
-     * The size of the new line character(s).
-     */
-    constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
-#elif TARGET_OS_MAC == 1
-    /**
-     * The new line character(s) for the platform.
-     */
-    constexpr char   NEWLINE[]    = "\n";
-    /**
-     * The size of the new line character(s).
-     */
-    constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
 #else
-#warning "Unsupported target Apple platform for New Line array, using default value"
+
+    #warning "Unsupported platform for New Line array, using default value"
+        
+    /**
+     * The new line character(s) for the platform.
+     */
+    constexpr const char NEWLINE[] = "\n";
+    /**
+     * The size of the new line character(s).
+     */
+    constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
+
+#endif
+    
+    class CString;
+    class CCString;
+
+    /**
+     * The string representation of an empty string.
+     */
+    constexpr const char EMPTY_STR[] = "";
+    /**
+     * The size of the EMPTY_STR array.
+     */
+    constexpr size_t EMPTY_STR_SIZE = sizeof(EMPTY_STR);
     
     /**
-     * The new line character(s) for the platform.
+     * The string representation of a true boolean value.
      */
-    constexpr char NEWLINE[] = "\n";
+    constexpr const char TRUE_STR[] = "true";
     /**
-     * The size of the new line character(s).
+     * The size of the TRUE_STR array.
      */
-    constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
-#endif
-
-#else
-
-#warning "Unsupported platform for New Line array, using default value"
+    constexpr size_t TRUE_STR_SIZE = sizeof(TRUE_STR);
     /**
-     * The new line character(s) for the platform.
+     * The string representation of a false boolean value.
      */
-    constexpr char NEWLINE[] = "\n";
+    constexpr const char FALSE_STR[] = "false";
     /**
-     * The size of the new line character(s).
+     * The size of the FALSE_STR array.
      */
-    constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
+    constexpr size_t FALSE_STR_SIZE = sizeof(FALSE_STR);
 
-#endif
+    /**
+     * The string representation of a true boolean value.
+     */
+    extern const std::string TRUE_STRING;
+    /**
+     * The string representation of a false boolean value.
+     */
+    extern const std::string FALSE_STRING;
+    
+    auto strIsNullTerminated(const char* str, size_t size) -> bool;
+
+    void strEnsureNullTerminated(const char* str, size_t size);
 
     void strTrimLeft(char *str, size_t size);
 
@@ -124,12 +170,108 @@ namespace NCL
 
     void strTrim(char *str, size_t size);
 
-    void stringTrimLeft(std::string str);
+    void stringTrimLeft(std::string& str);
 
-    void stringTrimRight(std::string str);
+    void stringTrimRight(std::string& str);
+    
+    void stringTrim(std::string& str);
+    
+    void stringAppend(std::string& str, const char* strToAppend); //Unsafe function
+    
+    void stringAppend(std::string& str, const char* strToAppend, size_t strToAppendSize);
 
-    void stringTrim(std::string str);
+    auto boolToString(bool value) -> const std::string&;
 
+    auto boolToCCString(bool value) -> CCString&;
+
+    auto strToBool(const char* str, size_t size, bool ignoreCase = false, bool looseMatch = false) -> bool;
+    
+    auto stringToBool(const std::string& str, bool ignoreCase = false, bool looseMatch = false) -> bool;
+    
+    class CString
+    {
+    public:
+        static const CString Null;
+        
+        CString(char* str, size_t size, bool dynamicPtr = true, bool mallocPtr = false);
+
+        explicit CString(size_t size);
+
+        ~CString();
+
+        NCL_NODISCARD constexpr auto isNull() const -> bool { return _str == nullptr; }
+
+        NCL_NODISCARD constexpr auto isEmpty() const -> bool
+        {
+            if (_str == nullptr)
+                return false;
+
+            if ((*_str) == '\0')
+                return true;
+            
+            return false;
+        }
+
+        NCL_NODISCARD constexpr auto isNullOrEmpty() const -> bool
+        {
+            if (_str == nullptr)
+                return true;
+
+            if ((*_str) == '\0')
+                return true;
+
+            return false;
+        }
+
+        NCL_NODISCARD constexpr auto str() -> char* { return _str; }
+        NCL_NODISCARD constexpr auto str() const -> const char* { return _str; }
+
+        NCL_NODISCARD constexpr auto size() const -> size_t { return _size; }
+
+        NCL_NODISCARD constexpr auto length() const -> size_t { return _str == nullptr ? 0 : strnlen(_str, _size); }
+
+    private:
+        char* _str;
+        const size_t _size;
+        const bool _dynamicPtr; // NOLINT(modernize-use-default-member-init)
+        const bool _mallocPtr; // NOLINT(modernize-use-default-member-init)
+    };
+
+    class CCString
+    {
+    public:
+        static const CCString Null;
+        static const CCString Empty;
+        
+        constexpr CCString(const char* str, size_t size, bool dynamicPtr = false, bool mallocPtr = false);
+
+        template<std::size_t N>
+        constexpr explicit CCString(const char(&str)[N]) : _str(str), _size(N), _dynamicPtr(false), _mallocPtr(false)
+        {
+            _length = strnlen(str, N);
+        }
+        
+        ~CCString();
+
+        NCL_NODISCARD constexpr auto isNull() const -> bool { return _str == nullptr; }
+
+        NCL_NODISCARD constexpr auto isEmpty() const -> bool { return _str != nullptr && _length == 0; }
+
+        NCL_NODISCARD constexpr auto isNullOrEmpty() const -> bool { return _str == nullptr|| _length == 0; }
+
+        NCL_NODISCARD constexpr auto str() const -> const char* { return _str; }
+
+        NCL_NODISCARD constexpr auto size() const -> size_t { return _size; }
+
+        NCL_NODISCARD constexpr auto length() const -> size_t { return _length; }
+        
+    private:
+        const char* _str;
+        const size_t _size;
+        const bool _dynamicPtr; // NOLINT(modernize-use-default-member-init)
+        const bool _mallocPtr; // NOLINT(modernize-use-default-member-init)
+        size_t _length{0};
+    };
 
 #pragma clang diagnostic pop
 
