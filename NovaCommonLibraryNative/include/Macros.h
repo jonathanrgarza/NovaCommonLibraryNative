@@ -5,6 +5,15 @@
 #ifndef NOVACOMMONLIBRARYNATIVE_MACROS_H
 #define NOVACOMMONLIBRARYNATIVE_MACROS_H
 
+//Generate Compiler Marco
+#ifdef _MSVC_LANG
+#define NCL_MSVC 
+#elif defined(__clang__)
+#define NCL_CLANG
+#elif defined(__GNUC__) || defined(__GNUG__)
+#define NCL_GCC
+#endif
+
 //Generate Lang Version Macro
 #if ((defined(_MSVC_LANG) && _MSVC_LANG >= 199711L) || __cplusplus >= 199711L)
 //C++98
@@ -52,7 +61,13 @@
 #ifdef NCL_LANG17
 #define NCL_NODISCARD [[nodiscard]]
 #else
-#define NCL_NODISCARD 
+    #if defined(_MSVC_LANG) && _MSVC_LANG >= 1700L
+    #define NCL_NODISCARD _Check_return_
+    #elif defined(NCL_CLANG) || defined(NCL_GCC) 
+    #define NCL_NODISCARD __attribute__((warn_unused_result))
+    #else
+    #define NCL_NODISCARD 
+    #endif
 #endif
 
 #endif //NOVACOMMONLIBRARYNATIVE_MACROS_H

@@ -4,9 +4,6 @@
 set(PROJ_NAME NovaCommonLibraryNative)
 project(${PROJ_NAME} VERSION 0.1)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
 # Declare Sources and Headers
 
 SET(HEADERS
@@ -27,4 +24,9 @@ SET(SOURCES
 
 # Create the library target
 add_library(${PROJ_NAME} STATIC "${SOURCES}" "${HEADERS}")
+#Specify the compiler/standard requirements
+set_target_properties(${PROJ_NAME} PROPERTIES
+        CXX_STANDARD 14
+        CXX_EXTENSIONS OFF
+        CXX_STANDARD_REQUIRED TRUE)
 target_include_directories(${PROJ_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/include")

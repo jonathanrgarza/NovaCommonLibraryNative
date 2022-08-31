@@ -16,7 +16,6 @@ namespace NCL
 #pragma ide diagnostic ignored "modernize-avoid-c-arrays"
 
 #if defined(_WIN32) || defined(_WIN64) //Windows
-
     /**
      * The new line character(s) for the platform.
      */
@@ -25,9 +24,7 @@ namespace NCL
      * The size of the new line character(s).
      */
     constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
-
 #elif defined(__CYGWIN__) //POSIX on Windows
-
     /**
      * The new line character(s) for the platform.
      */
@@ -36,9 +33,7 @@ namespace NCL
      * The size of the new line character(s).
      */
     constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
-
 #elif defined(__ANDROID__) //Android; Must come before Linux as this implies Linux also
-
     /**
      * The new line character(s) for the platform.
      */
@@ -47,9 +42,7 @@ namespace NCL
      * The size of the new line character(s).
      */
     constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
-
 #elif defined(__linux__) // Linux
-
     /**
      * The new line character(s) for the platform.
      */
@@ -58,9 +51,7 @@ namespace NCL
      * The size of the new line character(s).
      */
     constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
-
 #elif defined(__unix__) || !defined(__APPLE__) && !defined(__MACH__) // UNIX (and maybe BSD)
-
     /**
      * The new line character(s) for the platform.
      */
@@ -69,9 +60,7 @@ namespace NCL
      * The size of the new line character(s).
      */
     constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
-
 #elif defined(__APPLE__) && defined(__MACH__) // Apple OSX and iOS (Darwin)
-
     #include <TargetConditionals.h>
     
     #if TARGET_IPHONE_SIMULATOR == 1 || TARGET_OS_IPHONE == 1
@@ -93,7 +82,6 @@ namespace NCL
          */
         constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
     #else
-        
         #warning "Unsupported target Apple platform for New Line array, using default value"
         
         /**
@@ -104,11 +92,9 @@ namespace NCL
          * The size of the new line character(s).
          */
         constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
-        
     #endif
 
 #else
-
     #warning "Unsupported platform for New Line array, using default value"
         
     /**
@@ -119,12 +105,11 @@ namespace NCL
      * The size of the new line character(s).
      */
     constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
-
 #endif
     
-    class CString;
     class CCString;
-
+    class CString;
+    
     /**
      * The string representation of an empty string.
      */
@@ -187,6 +172,46 @@ namespace NCL
     auto strToBool(const char* str, size_t size, bool ignoreCase = false, bool looseMatch = false) -> bool;
     
     auto stringToBool(const std::string& str, bool ignoreCase = false, bool looseMatch = false) -> bool;
+
+    class CCString
+    {
+    public:
+        static const CCString Null;
+        static const CCString Empty;
+
+        constexpr CCString(const char* str, size_t size, bool dynamicPtr = false, bool mallocPtr = false);
+
+        template<std::size_t N>
+        constexpr explicit CCString(const char(&str)[N]) : _str(str), _size(N), _dynamicPtr(false), _mallocPtr(false)
+        {
+            _length = strnlen(str, N);
+        }
+
+        ~CCString();
+
+        NCL_NODISCARD constexpr auto isNull() const -> bool { return _str == nullptr; }
+
+        NCL_NODISCARD constexpr auto isEmpty() const -> bool { return _str != nullptr && _length == 0; }
+
+        NCL_NODISCARD constexpr auto isNullOrEmpty() const -> bool { return _str == nullptr|| _length == 0; }
+
+        NCL_NODISCARD constexpr auto str() const -> const char* { return _str; }
+
+        NCL_NODISCARD constexpr auto size() const -> size_t { return _size; }
+
+        NCL_NODISCARD constexpr auto length() const -> size_t { return _length; }
+
+        NCL_NODISCARD auto operator[](size_t i) const -> const char&;
+
+        friend auto operator<<(std::ostream& os, const CCString& str) -> std::ostream&;
+
+    private:
+        const char* _str;
+        const size_t _size;
+        const bool _dynamicPtr; // NOLINT(modernize-use-default-member-init)
+        const bool _mallocPtr; // NOLINT(modernize-use-default-member-init)
+        size_t _length{0};
+    };
     
     class CString
     {
@@ -229,48 +254,22 @@ namespace NCL
         NCL_NODISCARD constexpr auto size() const -> size_t { return _size; }
 
         NCL_NODISCARD constexpr auto length() const -> size_t { return _str == nullptr ? 0 : strnlen(_str, _size); }
+        
+        void resize(size_t size, bool retainContents = true);
+        void copy(const char* ptr, size_t size, bool allowResizing = false);
+
+        NCL_NODISCARD auto operator[](size_t i) const -> const char&;
+        NCL_NODISCARD auto operator[](size_t i) -> char&;
+
+        friend auto operator<<(std::ostream& os, const CString& str) -> std::ostream&;
 
     private:
+        void deletePtr();
+        
         char* _str;
-        const size_t _size;
-        const bool _dynamicPtr; // NOLINT(modernize-use-default-member-init)
+        size_t _size;
+        bool _dynamicPtr; // NOLINT(modernize-use-default-member-init)
         const bool _mallocPtr; // NOLINT(modernize-use-default-member-init)
-    };
-
-    class CCString
-    {
-    public:
-        static const CCString Null;
-        static const CCString Empty;
-        
-        constexpr CCString(const char* str, size_t size, bool dynamicPtr = false, bool mallocPtr = false);
-
-        template<std::size_t N>
-        constexpr explicit CCString(const char(&str)[N]) : _str(str), _size(N), _dynamicPtr(false), _mallocPtr(false)
-        {
-            _length = strnlen(str, N);
-        }
-        
-        ~CCString();
-
-        NCL_NODISCARD constexpr auto isNull() const -> bool { return _str == nullptr; }
-
-        NCL_NODISCARD constexpr auto isEmpty() const -> bool { return _str != nullptr && _length == 0; }
-
-        NCL_NODISCARD constexpr auto isNullOrEmpty() const -> bool { return _str == nullptr|| _length == 0; }
-
-        NCL_NODISCARD constexpr auto str() const -> const char* { return _str; }
-
-        NCL_NODISCARD constexpr auto size() const -> size_t { return _size; }
-
-        NCL_NODISCARD constexpr auto length() const -> size_t { return _length; }
-        
-    private:
-        const char* _str;
-        const size_t _size;
-        const bool _dynamicPtr; // NOLINT(modernize-use-default-member-init)
-        const bool _mallocPtr; // NOLINT(modernize-use-default-member-init)
-        size_t _length{0};
     };
 
 #pragma clang diagnostic pop
