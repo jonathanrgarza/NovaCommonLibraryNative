@@ -127,6 +127,146 @@ auto NCL::operator<<(std::ostream &os, const NCL::CString &str) -> std::ostream 
     return os;
 }
 
+auto NCL::strIsNullTerminated(const char *str, size_t size) -> bool
+{
+    if (str == nullptr || size == 0)
+        return false;
+
+    size_t len = strnlen(str, size);
+    return len == size;
+}
+
+void NCL::strEnsureNullTerminated(const char *str, size_t size)
+{
+    if (!strIsNullTerminated(str, size))
+        throw std::invalid_argument("str is not a null-terminated string");
+}
+
+void NCL::strTrimLeft(char *str, size_t size)
+{
+    if (str == nullptr || size == 0)
+        return;
+
+    size_t i;
+    for (i = 0; i < size; ++i)
+    {
+        char& character = str[i];
+        if (!isspace(character))
+            break;
+    }
+
+    //Check if any whitespace
+    if (i == 0)
+        return;
+
+    //Check if whole string is whitespace
+    if (i == size)
+    {
+        str[0] = '\0';
+        return;
+    }
+
+    //Move the character after beginning whitespace up to beginning
+    size_t len = strnlen(str, size);
+    for (size_t j = 0; j < len - i; ++j)
+    {
+        str[j] = str[i + j];
+    }
+    str[len - i] = '\0';
+}
+
+void NCL::strTrimRight(char *str, size_t size)
+{
+    if (str == nullptr || size == 0)
+        return;
+
+    size_t len = strnlen(str, size);
+    if (len == 0)
+        return;
+    
+    size_t i;
+    for (i = len - 1; i < len; --i)
+    {
+        char& character = str[i];
+        if (!isspace(character))
+            break;
+    }
+    
+    str[i+1] = '\0';
+}
+
+void NCL::strTrim(char *str, size_t size)
+{
+    if (str == nullptr || size == 0)
+        return;
+    //Right, then left for efficiently
+    strTrimRight(str, size);
+    strTrimLeft(str, size);
+}
+
+void NCL::stringTrimLeft(std::string &str)
+{
+    if (str.empty())
+        return;
+
+    size_t len = str.length();
+    int i;
+    for (i = 0; i < len; ++i)
+    {
+        char& character = str[i];
+        if (!isspace(character))
+            break;
+    }
+
+    if (i == 0)
+        return;
+
+    if (i == len)
+    {
+        str.clear();
+        return;
+    }
+    
+    str.erase(0, i);
+}
+
+void NCL::stringTrimRight(std::string &str)
+{
+    if (str.empty())
+        return;
+    
+    auto i = str.rbegin();
+    auto end = str.rend();
+
+    for (; i != end; i++)
+    {
+        char& character = *i;
+        if (!isspace(character))
+            break;
+    }
+
+    if (i == str.rbegin())
+        return;
+
+    if (i == end)
+    {
+        str.clear();
+        return;
+    }
+    
+    str.erase(i.base(), end.base());
+}
+
+void NCL::stringTrim(std::string &str)
+{
+    if (str.empty())
+        return;
+
+    //Right, then left for efficiently
+    stringTrimRight(str);
+    stringTrimLeft(str);
+}
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "modernize-avoid-c-arrays"
 void NCL::CString::resize(size_t size, bool retainContents)
