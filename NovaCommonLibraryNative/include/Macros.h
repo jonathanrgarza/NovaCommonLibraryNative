@@ -50,7 +50,8 @@
 #define NCL_LANG_VERSION 2020L
 #endif
 
-#if ((defined(_MSVC_LANG) && _MSVC_LANG > 202002L) || __cplusplus > 202002L)
+#if ((defined(_MSVC_LANG) && _MSVC_LANG > 202002L && _MSVC_LANG < 202501L) || \
+    (__cplusplus > 202002L && __cplusplus < 202501L))
 //C++23
 #define NCL_LANG23 1
 #undef NCL_LANG_VERSION
