@@ -9,7 +9,7 @@
 #include <string>
 #include "Macros.h"
 
-namespace NCL
+namespace Ncl
 {
 
 #pragma clang diagnostic push

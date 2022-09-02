@@ -17,9 +17,8 @@
 
 //Possible instruction set architecture platform values: NCL_ARCH_FAM_INTEL_AMD, NCL_ARCH_FAM_ARM
 
-namespace NCL
+namespace Ncl
 {
-
 
 //Determine the current OS (Platform) being built for
 #if defined(_WIN32) || defined(_WIN64) //Windows

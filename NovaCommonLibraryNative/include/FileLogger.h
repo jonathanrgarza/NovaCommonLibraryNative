@@ -11,7 +11,7 @@
 #include <memory>
 
 namespace Ncl {
-    /// \brief A logger which primarly logs to a file.
+    /// \brief A logger which primarily logs to a file.
     class FileLogger : Logger {
     public:
         /// \brief Initializes a new instance of FileLogger.
@@ -28,7 +28,7 @@ namespace Ncl {
 
         //End Properties
 
-        void log(const char *message, size_t messageSize, Ncl::LogLevel level = LogLevel::INFO,
+        void log(const char *message, size_t messageSize, Ncl::LogLevel level = LogLevel::Info,
                  const char *functionName = nullptr, size_t functionNameSize = 0, int32_t lineNumber = -1,
                  const char *fileName = nullptr, size_t fileNameSize = 0) override;
 
@@ -36,7 +36,6 @@ namespace Ncl {
         std::string _name;
         std::string _version;
         std::unique_ptr<std::ostream> _fstream;
-        bool _isActive;
         bool _leaveOpen;
         bool _includeConsoleOutput;
 
