@@ -267,8 +267,10 @@ void Ncl::stringTrim(std::string &str)
     stringTrimLeft(str);
 }
 
+#if defined(NCL_CLANG)
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "modernize-avoid-c-arrays"
+#endif
 void Ncl::CString::resize(size_t size, bool retainContents)
 {
 	const size_t oldSize = _size;
@@ -302,7 +304,9 @@ void Ncl::CString::resize(size_t size, bool retainContents)
     _dynamicPtr = true;
     _str = newPtr.release();
 }
+#if defined(NCL_CLANG)
 #pragma clang diagnostic pop
+#endif
 
 void Ncl::CString::copy(const char *ptr, size_t size, bool allowResizing)
 {
