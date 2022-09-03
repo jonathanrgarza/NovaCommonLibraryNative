@@ -24,10 +24,16 @@ SET(SOURCES
 
 # Create the library target
 add_library(${PROJ_NAME} STATIC "${SOURCES}" "${HEADERS}")
+target_include_directories(${PROJ_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/include")
 #Specify the compiler/standard requirements
 target_compile_features(${PROJ_NAME} PUBLIC cxx_std_14)
-set_target_properties(${PROJ_NAME} PROPERTIES
-        CXX_STANDARD 14
-        CXX_EXTENSIONS OFF
-        CXX_STANDARD_REQUIRED TRUE)
-target_include_directories(${PROJ_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/include")
+
+set(NovaCommonLibraryNative_CXX_STANDARD 14 CACHE STRING "NclRunner's CXX Standard") #Allow user to specify
+set_property(CACHE NovaCommonLibraryNative_CXX_STANDARD PROPERTY STRINGS 14 17 20 23)
+
+if (NOT NovaCommonLibraryNative_CXX_STANDARD EQUAL "14")
+    set_target_properties(${PROJ_NAME} PROPERTIES
+        CXX_STANDARD ${NovaCommonLibraryNative_CXX_STANDARD}
+        CXX_STANDARD_REQUIRED TRUE
+        CXX_EXTENSIONS OFF)
+endif()

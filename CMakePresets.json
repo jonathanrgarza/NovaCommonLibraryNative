@@ -52,12 +52,19 @@
       "name": "windows-base",
       "description": "Target Windows with the Visual Studio development environment.",
       "hidden": true,
-      "generator": "Ninja",
+      "generator": "Visual Studio 17 2022",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe"
+        "CMAKE_CXX_COMPILER": "cl.exe",
+        //Seems to set latest version but is hard coded instead of "latest" option
+        "CMAKE_SYSTEM_VERSION": "10.0 (latest installed version)"
+      },
+      //Specifies VS 2022
+      "toolset": {
+        "value": "v143", 
+        "strategy": "set"
       },
       "condition": {
         "type": "equals",
@@ -72,7 +79,7 @@
       "inherits": "windows-base",
       "architecture": {
         "value": "x64",
-        "strategy": "external"
+        "strategy": "set"
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
@@ -94,7 +101,7 @@
       "inherits": "windows-base",
       "architecture": {
         "value": "x86",
-        "strategy": "external"
+        "strategy": "set"
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
