@@ -56,3 +56,7 @@ bin/*
 test/test_runner
 /.vs
 /out
+*.vcxproj
+*.filters
+*.sln
+*.user

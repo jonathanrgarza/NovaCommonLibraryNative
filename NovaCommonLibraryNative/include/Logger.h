@@ -26,7 +26,9 @@ namespace Ncl
     class Logger
     {
     public:
-        //Properties
+	    virtual ~Logger() = default;
+
+	    //Properties
         
         /// \brief Gets if the logger is active, i.e. has any output set.
         /// \return True if the logger is active, otherwise, false.

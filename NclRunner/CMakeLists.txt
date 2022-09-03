@@ -15,8 +15,9 @@ SET(SOURCES
 # Create the executable target
 add_executable(${PROJ_NAME} "${SOURCES}")
 #Specify the compiler/standard requirements
+target_compile_features(${PROJ_NAME} PUBLIC cxx_std_14)
 set_target_properties(${PROJ_NAME} PROPERTIES
-        CXX_STANDARD 20
+        CXX_STANDARD 14
         CXX_EXTENSIONS OFF
         CXX_STANDARD_REQUIRED TRUE)
 # Link the executable with the NCL static library

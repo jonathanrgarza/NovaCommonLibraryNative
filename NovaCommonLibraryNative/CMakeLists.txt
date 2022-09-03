@@ -25,6 +25,7 @@ SET(SOURCES
 # Create the library target
 add_library(${PROJ_NAME} STATIC "${SOURCES}" "${HEADERS}")
 #Specify the compiler/standard requirements
+target_compile_features(${PROJ_NAME} PUBLIC cxx_std_14)
 set_target_properties(${PROJ_NAME} PROPERTIES
         CXX_STANDARD 14
         CXX_EXTENSIONS OFF

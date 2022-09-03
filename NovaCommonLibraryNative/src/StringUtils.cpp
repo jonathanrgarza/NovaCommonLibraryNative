@@ -209,7 +209,7 @@ void Ncl::stringTrimLeft(std::string &str)
     if (str.empty())
         return;
 
-    size_t len = str.length();
+    const size_t len = str.length();
     int i;
     for (i = 0; i < len; ++i)
     {
