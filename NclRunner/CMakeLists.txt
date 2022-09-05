@@ -15,13 +15,27 @@ SET(SOURCES
 # Create the executable target
 add_executable(${PROJ_NAME} "${SOURCES}")
 #Specify the compiler/standard requirements
-set(NclRunner_CXX_STANDARD 17 CACHE STRING "NclRunner's CXX Standard") #Allow user to specify
-set_property(CACHE NclRunner_CXX_STANDARD PROPERTY STRINGS 14 17 20 23)
 
+#Allow user to specify a C++ Standard Version for this particular executable
+set(NclRunner_CXX_STANDARD "Not Set" CACHE STRING "NCL Runner's C++ Standard")
+set_property(CACHE NclRunner_CXX_STANDARD PROPERTY STRINGS "Not Set" 14 17 20 23)
+# Set the C++ Language Standard to be used
+set(NclRunner_CXX_STANDARD_ACTUAL 17)
+if (${NclRunner_CXX_STANDARD} STREQUAL "Not Set" AND DEFINED CMAKE_CXX_STANDARD)
+  set(NclRunner_CXX_STANDARD_ACTUAL ${CMAKE_CXX_STANDARD})
+  message("NCL Runner: Using CMAKE_CXX_STANDARD override")
+elseif(NOT ${NclRunner_CXX_STANDARD} STREQUAL "Not Set")
+  set(NclRunner_CXX_STANDARD_ACTUAL ${NclRunner_CXX_STANDARD})
+  message("NCL Runner: Using NclRunner_CXX_STANDARD override")
+else()
+  message("NCL Runner: Using default C++ standard: ${NclRunner_CXX_STANDARD_ACTUAL}")
+endif()
 set_target_properties(${PROJ_NAME} PROPERTIES
-        CXX_STANDARD ${NclRunner_CXX_STANDARD}
+        CXX_STANDARD ${NclRunner_CXX_STANDARD_ACTUAL}
         CXX_STANDARD_REQUIRED TRUE
         CXX_EXTENSIONS OFF)
+message("NCL Runner: C++ Standard Version Specified for NCL Runner: ${NclRunner_CXX_STANDARD_ACTUAL}")
+
 # Link the executable with the NCL static library
 target_include_directories(${PROJ_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/../NovaCommonLibraryNative/include")
 target_link_libraries(${PROJ_NAME} NovaCommonLibraryNative)
