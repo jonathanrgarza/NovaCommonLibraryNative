@@ -29,6 +29,7 @@
 *.out
 *.app
 
+/.cmake
 **/cmake-build-debug
 **/cmake-build-debug-visual-studio
 **/CMakeCache.txt
@@ -40,6 +41,7 @@
 **/*.cbp
 **/CMakeScripts
 **/compile_commands.json
+/Testing/Temporary
 
 include/divisible/*
 
