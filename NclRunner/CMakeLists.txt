@@ -17,14 +17,14 @@ add_executable(${PROJ_NAME} "${SOURCES}")
 #Specify the compiler/standard requirements
 
 #Allow user to specify a C++ Standard Version for this particular executable
-set(NclRunner_CXX_STANDARD "Not Set" CACHE STRING "NCL Runner's C++ Standard")
+set(NclRunner_CXX_STANDARD "Default" CACHE STRING "NCL Runner's C++ Standard")
 set_property(CACHE NclRunner_CXX_STANDARD PROPERTY STRINGS "Not Set" 14 17 20 23)
 # Set the C++ Language Standard to be used
 set(NclRunner_CXX_STANDARD_ACTUAL 17)
-if (${NclRunner_CXX_STANDARD} STREQUAL "Not Set" AND DEFINED CMAKE_CXX_STANDARD)
+if (${NclRunner_CXX_STANDARD} STREQUAL "Default" AND DEFINED CMAKE_CXX_STANDARD)
   set(NclRunner_CXX_STANDARD_ACTUAL ${CMAKE_CXX_STANDARD})
   message("NCL Runner: Using CMAKE_CXX_STANDARD override")
-elseif(NOT ${NclRunner_CXX_STANDARD} STREQUAL "Not Set")
+elseif(NOT ${NclRunner_CXX_STANDARD} STREQUAL "Default")
   set(NclRunner_CXX_STANDARD_ACTUAL ${NclRunner_CXX_STANDARD})
   message("NCL Runner: Using NclRunner_CXX_STANDARD override")
 else()

@@ -29,14 +29,14 @@ target_include_directories(${PROJ_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/include")
 target_compile_features(${PROJ_NAME} PUBLIC cxx_std_14)
 
 #Allow user to specify a C++ Standard Version for this particular library
-set(NovaCommonLibraryNative_CXX_STANDARD "Not Set" CACHE STRING "Nova Common Library's C++ Standard")
+set(NovaCommonLibraryNative_CXX_STANDARD "Default" CACHE STRING "Nova Common Library's C++ Standard")
 set_property(CACHE NovaCommonLibraryNative_CXX_STANDARD PROPERTY STRINGS "Not Set" 14 17 20 23)
 
 set(NovaCommonLibraryNative_CXX_STANDARD_ACTUAL 14)
-if (${NovaCommonLibraryNative_CXX_STANDARD} STREQUAL "Not Set" AND DEFINED CMAKE_CXX_STANDARD)
+if (${NovaCommonLibraryNative_CXX_STANDARD} STREQUAL "Default" AND DEFINED CMAKE_CXX_STANDARD)
     set(NovaCommonLibraryNative_CXX_STANDARD_ACTUAL ${CMAKE_CXX_STANDARD})
     message("Nova Common Library: Using CMAKE_CXX_STANDARD override")
-elseif(NOT ${NovaCommonLibraryNative_CXX_STANDARD} STREQUAL "Not Set")
+elseif(NOT ${NovaCommonLibraryNative_CXX_STANDARD} STREQUAL "Default")
     set(NovaCommonLibraryNative_CXX_STANDARD_ACTUAL ${NovaCommonLibraryNative_CXX_STANDARD})
     message("Nova Common Library: Using NovaCommonLibraryNative_CXX_STANDARD_ACTUAL override")
 else()
