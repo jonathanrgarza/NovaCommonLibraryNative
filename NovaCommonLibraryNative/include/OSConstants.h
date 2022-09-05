@@ -5,8 +5,10 @@
 #ifndef NOVACOMMONLIBRARYNATIVE_OSCONSTANTS_H
 #define NOVACOMMONLIBRARYNATIVE_OSCONSTANTS_H
 
+#if defined(__clang__)
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "modernize-avoid-c-arrays"
+#endif
 
 #include <cstddef> //Includes std::size_t
 
@@ -242,7 +244,9 @@ namespace Ncl
     #endif
 #endif
 
+#if defined(__clang__)
 #pragma clang diagnostic pop
+#endif
 
 }
         

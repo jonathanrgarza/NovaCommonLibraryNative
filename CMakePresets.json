@@ -23,7 +23,8 @@
       "vendor": {
         "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
           "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}",
-          "intelliSenseMode": "windows-clang-x64"
+          "intelliSenseMode": "windows-clang-x64",
+          "enableClangTidyCodeAnalysis": true
         }
       }
     },
@@ -44,7 +45,8 @@
       },
       "vendor": {
         "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
-          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
+          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}",
+          "enableClangTidyCodeAnalysis": true
         }
       }
     },
@@ -52,69 +54,80 @@
       "name": "windows-base",
       "description": "Target Windows with the Visual Studio development environment.",
       "hidden": true,
-      "generator": "Visual Studio 17 2022",
+      //"generator": "Visual Studio 17 2022",
+      "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "cl.exe",
         "CMAKE_CXX_COMPILER": "cl.exe",
+        //"CMAKE_C_COMPILER": "clang",
+        //"CMAKE_CXX_COMPILER": "clang++",
         //Seems to set latest version but is hard coded instead of "latest" option
         "CMAKE_SYSTEM_VERSION": "10.0 (latest installed version)"
       },
       //Specifies VS 2022
       "toolset": {
-        "value": "v143", 
+        "value": "v143",
         "strategy": "set"
       },
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
-      }
-    },
-    {
-      "name": "x64-debug",
-      "displayName": "x64 Debug",
-      "description": "Target Windows (64-bit) with the Visual Studio development environment. (Debug)",
-      "inherits": "windows-base",
-      "architecture": {
-        "value": "x64",
-        "strategy": "set"
       },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [ "Windows" ],
+          //"enableClangTidyCodeAnalysis": true
+        }
       }
-    },
-    {
-      "name": "x64-release",
-      "displayName": "x64 Release",
-      "description": "Target Windows (64-bit) with the Visual Studio development environment. (RelWithDebInfo)",
-      "inherits": "x64-debug",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    },
-    {
-      "name": "x86-debug",
-      "displayName": "x86 Debug",
-      "description": "Target Windows (32-bit) with the Visual Studio development environment. (Debug)",
-      "inherits": "windows-base",
-      "architecture": {
-        "value": "x86",
-        "strategy": "set"
       },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
+      {
+        "name": "x64-debug",
+        "displayName": "x64 Debug",
+        "description": "Target Windows (64-bit) with the Visual Studio development environment. (Debug)",
+        "inherits": "windows-base",
+        "architecture": {
+          "value": "x64",
+          //"strategy": "set"
+          "strategy": "external"
+        },
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Debug"
+        }
+      },
+      {
+        "name": "x64-release",
+        "displayName": "x64 Release",
+        "description": "Target Windows (64-bit) with the Visual Studio development environment. (RelWithDebInfo)",
+        "inherits": "x64-debug",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Release"
+        }
+      },
+      {
+        "name": "x86-debug",
+        "displayName": "x86 Debug",
+        "description": "Target Windows (32-bit) with the Visual Studio development environment. (Debug)",
+        "inherits": "windows-base",
+        "architecture": {
+          "value": "x86",
+          //"strategy": "set"
+          "strategy": "external"
+        },
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Debug"
+        }
+      },
+      {
+        "name": "x86-release",
+        "displayName": "x86 Release",
+        "description": "Target Windows (32-bit) with the Visual Studio development environment. (RelWithDebInfo)",
+        "inherits": "x86-debug",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Release"
+        }
       }
-    },
-    {
-      "name": "x86-release",
-      "displayName": "x86 Release",
-      "description": "Target Windows (32-bit) with the Visual Studio development environment. (RelWithDebInfo)",
-      "inherits": "x86-debug",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    }
   ]
 }

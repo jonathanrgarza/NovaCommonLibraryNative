@@ -280,4 +280,3 @@ namespace Ncl
 }
 
 #endif //NOVACOMMONLIBRARYNATIVE_STRINGUTILS_H
-        

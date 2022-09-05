@@ -25,6 +25,7 @@ SET(SOURCES
 # Create the library target
 add_library(${PROJ_NAME} STATIC "${SOURCES}" "${HEADERS}")
 target_include_directories(${PROJ_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/include")
+
 #Specify the compiler/standard requirements
 target_compile_features(${PROJ_NAME} PUBLIC cxx_std_14)
 
