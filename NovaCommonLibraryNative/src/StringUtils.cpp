@@ -258,10 +258,10 @@ void Ncl::stringTrim(std::string &str)
 	stringTrimLeft(str);
 }
 
-#if defined(NCL_CLANG)
+#pragma warning(push)
+#pragma warning (disable : 4068 ) //Disable unknown paragmas
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "modernize-avoid-c-arrays"
-#endif
 
 void Ncl::CString::resize(const size_t size, const bool retainContents)
 {
@@ -292,9 +292,8 @@ void Ncl::CString::resize(const size_t size, const bool retainContents)
 	_str = newPtr.release();
 }
 
-#if defined(NCL_CLANG)
 #pragma clang diagnostic pop
-#endif
+#pragma warning(pop)
 
 void Ncl::CString::copy(const char *ptr, const size_t size, const bool allowResizing)
 {

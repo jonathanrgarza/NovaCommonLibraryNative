@@ -109,7 +109,6 @@ namespace Ncl {
 #endif
 
 	class CCString;
-
 	class CString;
 
 	/**
