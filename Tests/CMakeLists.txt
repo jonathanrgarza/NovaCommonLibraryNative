@@ -10,9 +10,13 @@ SET(SOURCES
 		StringUtilsTests.cpp
 		)
 
+SET(HEADERS
+		TestUtils.h
+		)
+
 add_subdirectory(Libs/Catch2)
 # These tests can use the Catch2-provided main
-add_executable(${PROJ_NAME} ${SOURCES})
+add_executable(${PROJ_NAME} ${SOURCES} ${HEADERS})
 # Link the executable with the NCL static library
 target_link_libraries(${PROJ_NAME} PRIVATE Catch2::Catch2WithMain NovaCommonLibraryNative)
 target_include_directories(${PROJ_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/../NovaCommonLibraryNative/include")
