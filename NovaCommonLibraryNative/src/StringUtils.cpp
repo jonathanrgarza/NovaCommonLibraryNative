@@ -11,12 +11,13 @@ const std::string Ncl::TRUE_STRING = "true";
 
 const std::string Ncl::FALSE_STRING = "false";
 
-constexpr Ncl::CCString::CCString(const char *str, const size_t size, const bool dynamicPtr, const bool mallocPtr) : _str(str), 
-	_size(size), _dynamicPtr(dynamicPtr), _mallocPtr(mallocPtr)
+constexpr Ncl::CCString::CCString(const char *str, const size_t size, const bool dynamicPtr, const bool mallocPtr)
+		: _str(str),
+		  _size(size), _dynamicPtr(dynamicPtr), _mallocPtr(mallocPtr)
 {
 	if (str == nullptr)
 		return;
-	
+
 	_length = strnlen(str, size);
 }
 
@@ -28,14 +29,12 @@ Ncl::CCString::~CCString()
 	if (_str == nullptr)
 		return;
 
-	if (_mallocPtr)
-	{
-
-		free(const_cast<void*>(static_cast<const void*>(_str)));
+	if (_mallocPtr) {
+		free(const_cast<void *>(static_cast<const void *>(_str)));
 		_str = nullptr;
 		return;
 	}
-	
+
 	delete[] _str;
 	_str = nullptr;
 }
@@ -53,30 +52,28 @@ auto Ncl::CCString::operator[](const size_t i) const -> const char &
 
 auto Ncl::operator<<(std::ostream &os, const Ncl::CCString &str) -> std::ostream &
 {
-	if (str.isNull())
-	{
+	if (str.isNull()) {
 		//os << "nullptr";
 		return os;
 	}
-	
+
 	os << str._str;
 	return os;
 }
 
 Ncl::CString::CString(char *str, const size_t size, const bool dynamicPtr, const bool mallocPtr) : _str(str),
-_size(size), _dynamicPtr(dynamicPtr), _mallocPtr(mallocPtr)
+	_size(size), _dynamicPtr(dynamicPtr), _mallocPtr(mallocPtr)
 {
 	if (size == 0 && str != nullptr)
 		throw std::invalid_argument("size can not be zero when str is not null");
 }
 
 Ncl::CString::CString(const size_t size) : _str(nullptr),
-_size(size), _dynamicPtr(true), _mallocPtr(false)
-{
+										   _size(size), _dynamicPtr(true), _mallocPtr(false) {
 	if (size == 0)
 		throw std::invalid_argument("size can not be zero");
-	
-	_str = new char[size] { '\0' };
+
+	_str = new char[size]{'\0'};
 }
 
 Ncl::CString::~CString()
@@ -87,8 +84,7 @@ Ncl::CString::~CString()
 	if (_str == nullptr)
 		return;
 
-	if (_mallocPtr)
-	{
+	if (_mallocPtr) {
 		free(_str);
 		_str = nullptr;
 		return;
@@ -104,7 +100,7 @@ auto Ncl::CString::operator[](const size_t i) const -> const char &
 {
 	if (i >= _size)
 		throw std::out_of_range("i is greater than CString's size");
-	
+
 	return _str[i];
 }
 
@@ -118,12 +114,11 @@ auto Ncl::CString::operator[](const size_t i) -> char &
 
 auto Ncl::operator<<(std::ostream &os, const Ncl::CString &str) -> std::ostream &
 {
-	if (str.isNull())
-	{
+	if (str.isNull()) {
 		//os << "nullptr";
 		return os;
 	}
-	
+
 	os << str._str;
 	return os;
 }
@@ -149,9 +144,8 @@ void Ncl::strTrimLeft(char *str, const size_t size)
 		return;
 
 	size_t i;
-	for (i = 0; i < size; ++i)
-	{
-		const char& character = str[i];
+	for (i = 0; i < size; ++i) {
+		const char &character = str[i];
 		if (!isspace(character))
 			break;
 	}
@@ -161,16 +155,14 @@ void Ncl::strTrimLeft(char *str, const size_t size)
 		return;
 
 	//Check if whole string is whitespace
-	if (i == size)
-	{
+	if (i == size) {
 		str[0] = '\0';
 		return;
 	}
 
 	//Move the character after beginning whitespace up to beginning
 	const size_t len = strnlen(str, size);
-	for (size_t j = 0; j < len - i; ++j)
-	{
+	for (size_t j = 0; j < len - i; ++j) {
 		str[j] = str[i + j];
 	}
 	str[len - i] = '\0';
@@ -187,14 +179,13 @@ void Ncl::strTrimRight(char *str, const size_t size)
 
 	constexpr size_t end = -1;
 	size_t i;
-	for (i = len - 1; i != end; --i)
-	{
-		const char& character = str[i];
+	for (i = len - 1; i != end; --i) {
+		const char &character = str[i];
 		if (!isspace(character))
 			break;
 	}
-	
-	str[i+1] = '\0';
+
+	str[i + 1] = '\0';
 }
 
 void Ncl::strTrim(char *str, const size_t size)
@@ -213,9 +204,8 @@ void Ncl::stringTrimLeft(std::string &str)
 
 	const size_t len = str.length();
 	size_t i;
-	for (i = 0; i < len; ++i)
-	{
-		const char& character = str[i];
+	for (i = 0; i < len; ++i) {
+		const char &character = str[i];
 		if (!isspace(character))
 			break;
 	}
@@ -223,12 +213,11 @@ void Ncl::stringTrimLeft(std::string &str)
 	if (i == 0)
 		return;
 
-	if (i == len)
-	{
+	if (i == len) {
 		str.clear();
 		return;
 	}
-	
+
 	str.erase(0, i);
 }
 
@@ -236,13 +225,12 @@ void Ncl::stringTrimRight(std::string &str)
 {
 	if (str.empty())
 		return;
-	
+
 	auto i = str.rbegin();
 	const auto end = str.rend();
 
-	for (; i != end; ++i)
-	{
-		const char& character = *i;
+	for (; i != end; ++i) {
+		const char &character = *i;
 		if (!isspace(character))
 			break;
 	}
@@ -250,15 +238,14 @@ void Ncl::stringTrimRight(std::string &str)
 	if (i == str.rbegin())
 		return;
 
-	if (i == end)
-	{
+	if (i == end) {
 		str.clear();
 		return;
 	}
 
 	// ReSharper disable once CommentTypo
 	//.base() flips the sides, i.e. the rbegin() == end()
-	str.erase(end.base(), i.base() );
+	str.erase(end.base(), i.base());
 }
 
 void Ncl::stringTrim(std::string &str)
@@ -275,56 +262,51 @@ void Ncl::stringTrim(std::string &str)
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "modernize-avoid-c-arrays"
 #endif
+
 void Ncl::CString::resize(const size_t size, const bool retainContents)
 {
 	const size_t oldSize = _size;
 	_size = size;
-	if (size == 0)
-	{
+	if (size == 0) {
 		deletePtr();
 		return;
 	}
-	
+
 	std::unique_ptr<char[]> newPtr;
-	if (_mallocPtr)
-	{
+	if (_mallocPtr) {
 		newPtr.reset(static_cast<char *>(malloc(sizeof(char) * size)));
 		newPtr.get()[0] = '\0';
-	}
-	else
-	{
+	} else {
 		newPtr = std::make_unique<char[]>(size);
 		newPtr.get()[0] = '\0';
 	}
 
-	if (retainContents)
-	{
+	if (retainContents) {
 		const size_t min = std::min(oldSize, size);
 		strncpy_s(newPtr.get(), size, _str, min);
 	}
 
 	deletePtr();
-	
+
 	_dynamicPtr = true;
 	_str = newPtr.release();
 }
+
 #if defined(NCL_CLANG)
 #pragma clang diagnostic pop
 #endif
 
 void Ncl::CString::copy(const char *ptr, const size_t size, const bool allowResizing)
 {
-	if (ptr == nullptr || size == 0)
-	{
+	if (ptr == nullptr || size == 0) {
 		if (!allowResizing)
 			throw std::invalid_argument("ptr can not be nullptr while copying with no resizing");
 
 		resize(0, false); //Will result in _str becoming a nullptr
 		return;
 	}
-	
-	if (_size >= size)
-	{
+
+	if (_size >= size) {
 		strncpy_s(_str, _size, ptr, size);
 		return;
 	}
@@ -341,18 +323,14 @@ void Ncl::CString::deletePtr()
 {
 	if (_str == nullptr)
 		return;
-	
-	if (_dynamicPtr)
-	{
-		if (_mallocPtr)
-		{
+
+	if (_dynamicPtr) {
+		if (_mallocPtr) {
 			free(_str);
-		}
-		else
-		{
+		} else {
 			delete[] _str;
 		}
 	}
-	
+
 	_str = nullptr;
 }

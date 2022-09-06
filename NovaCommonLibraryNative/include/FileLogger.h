@@ -10,39 +10,43 @@
 #include <iostream>
 #include <memory>
 
-namespace Ncl {
-    /// \brief A logger which primarily logs to a file.
-    class FileLogger : Logger {
-    public:
-        /// \brief Initializes a new instance of FileLogger.
-        FileLogger();
+namespace Ncl
+{
+	/// \brief A logger which primarily logs to a file.
+	class FileLogger : Logger
+	{
+	public:
+		/// \brief Initializes a new instance of FileLogger.
+		FileLogger();
 
 #if defined(_WIN32) || defined(_WIN64)
-        FileLogger(const std::string &name, const std::string &version, const std::string &logPath,
-                   bool includeConsoleOutput = false, bool includeDebugOutput = false);
+
+		FileLogger(const std::string &name, const std::string &version, const std::string &logPath,
+				   bool includeConsoleOutput = false, bool includeDebugOutput = false);
+
 #else
-        FileLogger(const std::string& name, const std::string& version, const std::string& logPath,
-                       bool includeConsoleOutput = false);
+		FileLogger(const std::string& name, const std::string& version, const std::string& logPath,
+					   bool includeConsoleOutput = false);
 #endif
-        //Properties
+		//Properties
 
-        //End Properties
+		//End Properties
 
-        void log(const char *message, size_t messageSize, Ncl::LogLevel level = LogLevel::Info,
-                 const char *functionName = nullptr, size_t functionNameSize = 0, int32_t lineNumber = -1,
-                 const char *fileName = nullptr, size_t fileNameSize = 0) override;
+		void log(const char *message, size_t messageSize, Ncl::LogLevel level = LogLevel::Info,
+				 const char *functionName = nullptr, size_t functionNameSize = 0, int32_t lineNumber = -1,
+				 const char *fileName = nullptr, size_t fileNameSize = 0) override;
 
-    private:
-        std::string _name;
-        std::string _version;
-        std::unique_ptr<std::ostream> _fstream;
-        bool _leaveOpen;
-        bool _includeConsoleOutput;
+	private:
+		std::string _name;
+		std::string _version;
+		std::unique_ptr<std::ostream> _fstream;
+		bool _leaveOpen;
+		bool _includeConsoleOutput;
 
 #if defined(_WIN32) || defined(_WIN64)
-        bool _includeDebugOutput;
+		bool _includeDebugOutput;
 #endif
-    };
+	};
 }
 
 #endif //NOVACOMMONLIBRARYNATIVE_FILELOGGER_H

@@ -7,8 +7,8 @@ project(${PROJ_NAME} VERSION 0.1)
 
 # Declare Sources and Headers
 SET(SOURCES
-        StringUtilsTests.cpp
-        )
+		StringUtilsTests.cpp
+		)
 
 add_subdirectory(Libs/Catch2)
 # These tests can use the Catch2-provided main

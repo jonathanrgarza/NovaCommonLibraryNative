@@ -9,6 +9,7 @@
 #pragma ide diagnostic ignored "modernize-avoid-c-arrays"
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_section_info.hpp>
 
 #include "StringUtils.h"
 
