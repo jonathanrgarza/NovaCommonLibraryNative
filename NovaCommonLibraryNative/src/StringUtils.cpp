@@ -134,7 +134,7 @@ auto Ncl::strIsNullTerminated(const char *str, const size_t size) -> bool
 		return false;
 
 	const size_t len = strnlen(str, size);
-	return len == size;
+	return len < size;
 }
 
 void Ncl::strEnsureNullTerminated(const char *str, const size_t size)

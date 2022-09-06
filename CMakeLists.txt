@@ -10,3 +10,6 @@ add_subdirectory(NovaCommonLibraryNative)
 
 # add the NclRunner project
 add_subdirectory(NclRunner)
+
+# add the NCL Unit Test project
+add_subdirectory(Tests)
