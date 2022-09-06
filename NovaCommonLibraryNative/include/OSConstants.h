@@ -27,7 +27,7 @@ namespace Ncl
 	/**
 	 * Determines that the target platform is Windows
 	 */
-#define NCL_OS_WINDOWS
+	#define NCL_OS_WINDOWS
 
 	/**
 	 * The name of the current platform.
@@ -41,11 +41,11 @@ namespace Ncl
 	/**
 	 * Determines that the target platform is POSIX for Windows
 	 */
-#define NCL_OS_POSIX_WINDOWS
+	#define NCL_OS_POSIX_WINDOWS
 	/**
 	 * Determines that the target platform is UNIX
 	 */
-#define NCL_OS_UNIX
+	#define NCL_OS_UNIX
 
 	/**
 	 * The name of the current platform.
@@ -59,7 +59,7 @@ namespace Ncl
 	/**
 	 * Determines that the target platform is Android
 	 */
-#define NCL_OS_ANDROID
+	#define NCL_OS_ANDROID
 
 	/**
 	 * The name of the current platform.
@@ -73,7 +73,7 @@ namespace Ncl
 	/**
 	 * Determines that the target platform is Linux
 	 */
-#define NCL_OS_LINUX
+	#define NCL_OS_LINUX
 
 	/**
 	 * The name of the current platform.
@@ -87,15 +87,15 @@ namespace Ncl
 	/**
 	 * Determines that the target platform is UNIX
 	 */
-#define NCL_OS_UNIX
+	#define NCL_OS_UNIX
 
 	//Check if platform is also BSD
-#include <sys/param.h>
-#if defined(BSD)
+	#include <sys/param.h>
+	#if defined(BSD)
 		/**
 		 * Determines that the target platform is BSD
 		 */
-#define NCL_OS_BSD // FreeBSD, NetBSD, OpenBSD, DragonFly BSD
+		#define NCL_OS_BSD // FreeBSD, NetBSD, OpenBSD, DragonFly BSD
 
 		/**
 		 * The name of the current platform.
@@ -105,7 +105,7 @@ namespace Ncl
 		 * The size of the platform name.
 		 */
 		constexpr size_t PLATFORM_NAME_SIZE = sizeof(PLATFORM_NAME);
-#else
+	#else
 		/**
 		 * The name of the current platform.
 		 */
@@ -114,31 +114,31 @@ namespace Ncl
 		 * The size of the platform name.
 		 */
 		constexpr size_t PLATFORM_NAME_SIZE = sizeof(PLATFORM_NAME);
-#endif
+	#endif
 #elif defined(__APPLE__) && defined(__MACH__) // Apple OSX and iOS (Darwin)
 
-#include <TargetConditionals.h>
+	#include <TargetConditionals.h>
 
-#if TARGET_IPHONE_SIMULATOR == 1
+	#if TARGET_IPHONE_SIMULATOR == 1
 		/**
 		 * Determines that the target platform is iOS
 		 */
-#define NCL_OS_IOS // Apple iOS
-#elif TARGET_OS_IPHONE == 1
+		#define NCL_OS_IOS // Apple iOS
+	#elif TARGET_OS_IPHONE == 1
 		/**
 		 * Determines that the target platform is iOS
 		 */
-#define NCL_OS_IOS // Apple iOS
-#elif TARGET_OS_MAC == 1
+		#define NCL_OS_IOS // Apple iOS
+	#elif TARGET_OS_MAC == 1
 		/**
 		 * Determines that the target platform is macOS
 		 */
-#define NCL_OS_MACOS // Apple OSX
-#else
-#error "Unsupported target Apple platform"
-#endif
+		#define NCL_OS_MACOS // Apple OSX
+	#else
+		#error "Unsupported target Apple platform"
+	#endif
 
-#ifdef NCL_OS_IOS
+	#ifdef NCL_OS_IOS
 		/**
 		 * The name of the current platform.
 		 */
@@ -147,7 +147,7 @@ namespace Ncl
 		 * The size of the platform name.
 		 */
 		constexpr size_t PLATFORM_NAME_SIZE = sizeof(PLATFORM_NAME);
-#elif defined(NCL_OS_MACOS)
+	#elif defined(NCL_OS_MACOS)
 		/**
 		 * The name of the current platform.
 		 */
@@ -156,92 +156,92 @@ namespace Ncl
 		 * The size of the platform name.
 		 */
 		constexpr size_t PLATFORM_NAME_SIZE = sizeof(PLATFORM_NAME);
-#endif
+	#endif
 #else
-#error "Unsupported target OS platform"
+	#error "Unsupported target OS platform"
 #endif
 
 //Determine the instruction set architecture
 #ifdef NCL_OS_WINDOWS
-#if defined(_WIN64) || defined(__x86_64__) || defined(_M_X64)
-	/**
-	 * Determines that the target architecture is x64 (64-bit)
-	 */
-#define NCL_ARCH_X64
-	/**
-	 * Determines that the target architecture platform is Intel_AMD
-	 */
-#define NCL_ARCH_FAM_INTEL_AMD
-#elif defined(_WIN32) || defined(__i386__) || defined(_M_IX86)
-	/**
-	 * Determines that the target architecture is x86 (32-bit)
-	 */
-#define NCL_ARCH_X86
-	/**
-	 * Determines that the target architecture platform is Intel_AMD
-	 */
-#define NCL_ARCH_FAM_INTEL_AMD
-#elif defined(_M_ARM64) || defined(__aarch64__)
-	/**
-	 * Determines that the target architecture is ARM64 (64-bit)
-	 */
-#define NCL_ARCH_ARM64
-	/**
-	 * Determines that the target architecture platform is ARM
-	 */
-#define NCL_ARCH_FAM_ARM
-#elif defined(_M_ARM) || defined(__arm__)
-	/**
-	 * Determines that the target architecture is ARM32 (32-bit)
-	 */
-#define NCL_ARCH_ARM32
-	/**
-	 * Determines that the target architecture platform is ARM
-	 */
-#define NCL_ARCH_FAM_ARM
+	#if defined(_WIN64) || defined(__x86_64__) || defined(_M_X64)
+		/**
+		 * Determines that the target architecture is x64 (64-bit)
+		 */
+		#define NCL_ARCH_X64
+		/**
+		 * Determines that the target architecture platform is Intel_AMD
+		 */
+		#define NCL_ARCH_FAM_INTEL_AMD
+	#elif defined(_WIN32) || defined(__i386__) || defined(_M_IX86)
+		/**
+		 * Determines that the target architecture is x86 (32-bit)
+		 */
+		#define NCL_ARCH_X86
+		/**
+		 * Determines that the target architecture platform is Intel_AMD
+		 */
+		#define NCL_ARCH_FAM_INTEL_AMD
+	#elif defined(_M_ARM64) || defined(__aarch64__)
+		/**
+		 * Determines that the target architecture is ARM64 (64-bit)
+		 */
+		#define NCL_ARCH_ARM64
+		/**
+		 * Determines that the target architecture platform is ARM
+		 */
+		#define NCL_ARCH_FAM_ARM
+	#elif defined(_M_ARM) || defined(__arm__)
+		/**
+		 * Determines that the target architecture is ARM32 (32-bit)
+		 */
+		#define NCL_ARCH_ARM32
+		/**
+		 * Determines that the target architecture platform is ARM
+		 */
+		#define NCL_ARCH_FAM_ARM
+	#else
+		#error "Unsupported instruction set architecture"
+	#endif
 #else
-#error "Unsupported instruction set architecture"
-#endif
-#else
-#if defined(__x86_64__) || defined(_M_X64)
-	/**
-	 * Determines that the target architecture is x64 (64-bit)
-	 */
-#define NCL_ARCH_X64
-	/**
-	 * Determines that the target architecture platform is Intel_AMD
-	 */
-#define NCL_ARCH_FAM_INTEL_AMD
-#elif defined(__i386__) || defined(_M_IX86)
-	/**
-	 * Determines that the target architecture is x86 (32-bit)
-	 */
-#define NCL_ARCH_X86
-	/**
-	 * Determines that the target architecture platform is Intel_AMD
-	 */
-#define NCL_ARCH_FAM_INTEL_AMD
-#elif defined(__aarch64__) || defined(_M_ARM64)
-	/**
-	 * Determines that the target architecture is ARM64 (64-bit)
-	 */
-#define NCL_ARCH_ARM64
-	/**
-	 * Determines that the target architecture platform is ARM
-	 */
-#define NCL_ARCH_FAM_ARM
-#elif defined(__arm__) || defined(_M_ARM)
-	/**
-	 * Determines that the target architecture is ARM32 (32-bit)
-	 */
-#define NCL_ARCH_ARM32
-	/**
-	 * Determines that the target architecture platform is ARM
-	 */
-#define NCL_ARCH_FAM_ARM
-#else
-#error "Unsupported instruction set architecture"
-#endif
+	#if defined(__x86_64__) || defined(_M_X64)
+		/**
+		 * Determines that the target architecture is x64 (64-bit)
+		 */
+		#define NCL_ARCH_X64
+		/**
+		 * Determines that the target architecture platform is Intel_AMD
+		 */
+		#define NCL_ARCH_FAM_INTEL_AMD
+	#elif defined(__i386__) || defined(_M_IX86)
+		/**
+		 * Determines that the target architecture is x86 (32-bit)
+		 */
+		#define NCL_ARCH_X86
+		/**
+		 * Determines that the target architecture platform is Intel_AMD
+		 */
+		#define NCL_ARCH_FAM_INTEL_AMD
+	#elif defined(__aarch64__) || defined(_M_ARM64)
+		/**
+		 * Determines that the target architecture is ARM64 (64-bit)
+		 */
+		#define NCL_ARCH_ARM64
+		/**
+		 * Determines that the target architecture platform is ARM
+		 */
+		#define NCL_ARCH_FAM_ARM
+	#elif defined(__arm__) || defined(_M_ARM)
+		/**
+		 * Determines that the target architecture is ARM32 (32-bit)
+		 */
+		#define NCL_ARCH_ARM32
+		/**
+		 * Determines that the target architecture platform is ARM
+		 */
+		#define NCL_ARCH_FAM_ARM
+	#else
+		#error "Unsupported instruction set architecture"
+	#endif
 #endif
 
 #pragma clang diagnostic pop
