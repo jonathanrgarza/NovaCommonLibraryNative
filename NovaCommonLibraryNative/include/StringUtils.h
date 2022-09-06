@@ -11,10 +11,11 @@
 
 namespace Ncl
 {
-#if defined(NCL_CLANG)
+#pragma warning (push)
+#pragma warning (disable : 4068 )
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "modernize-avoid-c-arrays"
-#endif
+
 
 #if defined(_WIN32) || defined(_WIN64) //Windows
     /**
@@ -273,10 +274,8 @@ namespace Ncl
         const bool _mallocPtr; // NOLINT(modernize-use-default-member-init)
     };
 
-#if defined(NCL_CLANG)
 #pragma clang diagnostic pop
-#endif
-
+#pragma warning (pop)
 }
 
 #endif //NOVACOMMONLIBRARYNATIVE_STRINGUTILS_H

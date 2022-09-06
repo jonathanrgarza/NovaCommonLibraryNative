@@ -78,7 +78,7 @@
       },
       "vendor": {
         "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "hostOS": [ "Windows" ],
+          "hostOS": [ "Windows" ]
           //"enableClangTidyCodeAnalysis": true
         }
       }
