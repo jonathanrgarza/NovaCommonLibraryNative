@@ -10,6 +10,7 @@
 
 #include "TestUtils.h"
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/benchmark/catch_benchmark.hpp>
 
 #include "StringUtils.h"
 
@@ -280,6 +281,19 @@ TEST_CASE( "Null string returns the same", "[strTrim]" )
 
 	//Act
 	Ncl::strTrim(actual, 0);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-string get appended", "[stringAppend]" )
+{
+	//Arrange
+	std::string expected = "test appended";
+	std::string actual = "test";
+
+	//Act
+	Ncl::stringAppend(actual, " appended");
 
 	//Assert
 	REQUIRE(expected == actual);

@@ -9,12 +9,12 @@
 #include <string>
 #include "Macros.h"
 
-namespace Ncl {
+namespace Ncl
+{
 #pragma warning (push)
 #pragma warning (disable : 4068 )
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "modernize-avoid-c-arrays"
-
 
 #if defined(_WIN32) || defined(_WIN64) //Windows
 	/**
@@ -62,9 +62,9 @@ namespace Ncl {
 	 */
 	constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
 #elif defined(__APPLE__) && defined(__MACH__) // Apple OSX and iOS (Darwin)
-#include <TargetConditionals.h>
+	#include <TargetConditionals.h>
 
-#if TARGET_IPHONE_SIMULATOR == 1 || TARGET_OS_IPHONE == 1
+	#if TARGET_IPHONE_SIMULATOR == 1 || TARGET_OS_IPHONE == 1
 		/**
 		 * The new line character(s) for the platform.
 		 */
@@ -73,7 +73,7 @@ namespace Ncl {
 		 * The size of the new line character(s).
 		 */
 		constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
-#elif TARGET_OS_MAC == 1
+	#elif TARGET_OS_MAC == 1
 		/**
 		 * The new line character(s) for the platform.
 		 */
@@ -82,21 +82,20 @@ namespace Ncl {
 		 * The size of the new line character(s).
 		 */
 		constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
+	#else
+		#warning "Unsupported target Apple platform for New Line array, using default value"
+
+		/**
+		 * The new line character(s) for the platform.
+		 */
+		constexpr const char NEWLINE[] = "\n";
+		/**
+		 * The size of the new line character(s).
+		 */
+		constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
+	#endif
 #else
-#warning "Unsupported target Apple platform for New Line array, using default value"
-
-		/**
-		 * The new line character(s) for the platform.
-		 */
-		constexpr const char NEWLINE[] = "\n";
-		/**
-		 * The size of the new line character(s).
-		 */
-		constexpr size_t NEWLINE_SIZE = sizeof(NEWLINE);
-#endif
-
-#else
-#warning "Unsupported platform for New Line array, using default value"
+	#warning "Unsupported platform for New Line array, using default value"
 
 	/**
 	 * The new line character(s) for the platform.
@@ -162,7 +161,16 @@ namespace Ncl {
 
 	void stringTrim(std::string &str);
 
-	void stringAppend(std::string &str, const char *strToAppend); //Unsafe function
+	/// \brief Appends the given c-string to.
+	/// \tparam N The size of the c-string literal.
+	/// \param str The string to append to.
+	/// \param strToAppend The c-string to append.
+	template<std::size_t N>
+	constexpr void stringAppend(std::string &str, const char(&strToAppend)[N])
+	{
+		size_t length = strnlen(strToAppend, N);
+		str.append(strToAppend, length);
+	}
 
 	void stringAppend(std::string &str, const char *strToAppend, size_t strToAppendSize);
 
@@ -174,7 +182,8 @@ namespace Ncl {
 
 	auto stringToBool(const std::string &str, bool ignoreCase = false, bool looseMatch = false) -> bool;
 
-	class CCString {
+	class CCString
+	{
 	public:
 		static const CCString Null;
 		static const CCString Empty;
@@ -182,7 +191,8 @@ namespace Ncl {
 		constexpr CCString(const char *str, size_t size, bool dynamicPtr = false, bool mallocPtr = false);
 
 		template<std::size_t N>
-		constexpr explicit CCString(const char(&str)[N]) : _str(str), _size(N), _dynamicPtr(false), _mallocPtr(false) {
+		constexpr explicit CCString(const char(&str)[N]) : _str(str), _size(N), _dynamicPtr(false), _mallocPtr(false)
+		{
 			_length = strnlen(str, N);
 		}
 
@@ -212,7 +222,8 @@ namespace Ncl {
 		size_t _length{0};
 	};
 
-	class CString {
+	class CString
+	{
 	public:
 		static const CString Null;
 
@@ -224,7 +235,8 @@ namespace Ncl {
 
 		NCL_NODISCARD constexpr auto isNull() const -> bool { return _str == nullptr; }
 
-		NCL_NODISCARD constexpr auto isEmpty() const -> bool {
+		NCL_NODISCARD constexpr auto isEmpty() const -> bool
+		{
 			if (_str == nullptr)
 				return false;
 
@@ -234,7 +246,8 @@ namespace Ncl {
 			return false;
 		}
 
-		NCL_NODISCARD constexpr auto isNullOrEmpty() const -> bool {
+		NCL_NODISCARD constexpr auto isNullOrEmpty() const -> bool
+		{
 			if (_str == nullptr)
 				return true;
 
@@ -250,7 +263,10 @@ namespace Ncl {
 
 		NCL_NODISCARD constexpr auto size() const -> size_t { return _size; }
 
-		NCL_NODISCARD constexpr auto length() const -> size_t { return _str == nullptr ? 0 : strnlen(_str, _size); }
+		NCL_NODISCARD constexpr auto length() const -> size_t
+		{
+			return _str == nullptr ? 0 : strnlen(_str, _size);
+		}
 
 		void resize(size_t size, bool retainContents = true);
 

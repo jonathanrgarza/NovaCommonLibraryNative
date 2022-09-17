@@ -12,7 +12,8 @@
 namespace Ncl
 {
 	/// \brief Represents a log level.
-	enum class LogLevel {
+	enum class LogLevel
+	{
 		Trace,
 		Debug,
 		Info,
@@ -42,7 +43,8 @@ namespace Ncl
 		/// \brief Checks if the given log level is enabled for the logger.
 		/// \param level The log level.
 		/// \return True if the level is enabled, otherwise, false.
-		bool isEnabled(LogLevel level) const {
+		bool isEnabled(LogLevel level) const
+		{
 			return level >= _level;
 		}
 
@@ -164,7 +166,8 @@ namespace Ncl
 		void trace(const char *message, size_t messageSize,
 				   const char *functionName = nullptr, size_t functionNameSize = 0,
 				   int32_t lineNumber = -1,
-				   const char *fileName = nullptr, size_t fileNameSize = 0) {
+				   const char *fileName = nullptr, size_t fileNameSize = 0)
+		{
 			log(message, messageSize, LogLevel::Trace,
 				functionName, functionNameSize,
 				lineNumber, fileName, fileNameSize);
@@ -180,7 +183,8 @@ namespace Ncl
 		void trace(const std::string &message,
 				   const char *functionName = nullptr, size_t functionNameSize = 0,
 				   int32_t lineNumber = -1,
-				   const char *fileName = nullptr, size_t fileNameSize = 0) {
+				   const char *fileName = nullptr, size_t fileNameSize = 0)
+		{
 			log(message, LogLevel::Trace,
 				functionName, functionNameSize,
 				lineNumber, fileName, fileNameSize);
@@ -197,7 +201,8 @@ namespace Ncl
 		void debug(const char *message, size_t messageSize,
 				   const char *functionName = nullptr, size_t functionNameSize = 0,
 				   int32_t lineNumber = -1,
-				   const char *fileName = nullptr, size_t fileNameSize = 0) {
+				   const char *fileName = nullptr, size_t fileNameSize = 0)
+		{
 			log(message, messageSize, LogLevel::Debug,
 				functionName, functionNameSize,
 				lineNumber, fileName, fileNameSize);
@@ -213,7 +218,8 @@ namespace Ncl
 		void debug(const std::string &message,
 				   const char *functionName = nullptr, size_t functionNameSize = 0,
 				   int32_t lineNumber = -1,
-				   const char *fileName = nullptr, size_t fileNameSize = 0) {
+				   const char *fileName = nullptr, size_t fileNameSize = 0)
+		{
 			log(message, LogLevel::Debug,
 				functionName, functionNameSize,
 				lineNumber, fileName, fileNameSize);
@@ -230,7 +236,8 @@ namespace Ncl
 		void info(const char *message, size_t messageSize,
 				  const char *functionName = nullptr, size_t functionNameSize = 0,
 				  int32_t lineNumber = -1,
-				  const char *fileName = nullptr, size_t fileNameSize = 0) {
+				  const char *fileName = nullptr, size_t fileNameSize = 0)
+		{
 			log(message, messageSize, LogLevel::Info,
 				functionName, functionNameSize,
 				lineNumber, fileName, fileNameSize);
@@ -246,7 +253,8 @@ namespace Ncl
 		void info(const std::string &message,
 				  const char *functionName = nullptr, size_t functionNameSize = 0,
 				  int32_t lineNumber = -1,
-				  const char *fileName = nullptr, size_t fileNameSize = 0) {
+				  const char *fileName = nullptr, size_t fileNameSize = 0)
+		{
 			log(message, LogLevel::Info,
 				functionName, functionNameSize,
 				lineNumber, fileName, fileNameSize);
@@ -263,7 +271,8 @@ namespace Ncl
 		void warn(const char *message, size_t messageSize,
 				  const char *functionName = nullptr, size_t functionNameSize = 0,
 				  int32_t lineNumber = -1,
-				  const char *fileName = nullptr, size_t fileNameSize = 0) {
+				  const char *fileName = nullptr, size_t fileNameSize = 0)
+		{
 			log(message, messageSize, LogLevel::Warn,
 				functionName, functionNameSize,
 				lineNumber, fileName, fileNameSize);
@@ -279,7 +288,8 @@ namespace Ncl
 		void warn(const std::string &message,
 				  const char *functionName = nullptr, size_t functionNameSize = 0,
 				  int32_t lineNumber = -1,
-				  const char *fileName = nullptr, size_t fileNameSize = 0) {
+				  const char *fileName = nullptr, size_t fileNameSize = 0)
+		{
 			log(message, LogLevel::Warn,
 				functionName, functionNameSize,
 				lineNumber, fileName, fileNameSize);
@@ -296,7 +306,8 @@ namespace Ncl
 		void error(const char *message, size_t messageSize,
 				   const char *functionName = nullptr, size_t functionNameSize = 0,
 				   int32_t lineNumber = -1,
-				   const char *fileName = nullptr, size_t fileNameSize = 0) {
+				   const char *fileName = nullptr, size_t fileNameSize = 0)
+		{
 			log(message, messageSize, LogLevel::Error,
 				functionName, functionNameSize,
 				lineNumber, fileName, fileNameSize);
@@ -312,7 +323,8 @@ namespace Ncl
 		void error(const std::string &message,
 				   const char *functionName = nullptr, size_t functionNameSize = 0,
 				   int32_t lineNumber = -1,
-				   const char *fileName = nullptr, size_t fileNameSize = 0) {
+				   const char *fileName = nullptr, size_t fileNameSize = 0)
+		{
 			log(message, LogLevel::Error,
 				functionName, functionNameSize,
 				lineNumber, fileName, fileNameSize);
@@ -329,7 +341,8 @@ namespace Ncl
 		void fatal(const char *message, size_t messageSize,
 				   const char *functionName = nullptr, size_t functionNameSize = 0,
 				   int32_t lineNumber = -1,
-				   const char *fileName = nullptr, size_t fileNameSize = 0) {
+				   const char *fileName = nullptr, size_t fileNameSize = 0)
+		{
 			log(message, messageSize, LogLevel::Fatal,
 				functionName, functionNameSize,
 				lineNumber, fileName, fileNameSize);
@@ -345,7 +358,8 @@ namespace Ncl
 		void fatal(const std::string &message,
 				   const char *functionName = nullptr, size_t functionNameSize = 0,
 				   int32_t lineNumber = -1,
-				   const char *fileName = nullptr, size_t fileNameSize = 0) {
+				   const char *fileName = nullptr, size_t fileNameSize = 0)
+		{
 			log(message, LogLevel::Fatal,
 				functionName, functionNameSize,
 				lineNumber, fileName, fileNameSize);
