@@ -299,5 +299,301 @@ TEST_CASE( "c-string get appended", "[stringAppend]" )
 	REQUIRE(expected == actual);
 }
 
+TEST_CASE( "c-string with text after null-character get appended", "[stringAppend]" )
+{
+	//Arrange
+	std::string expected = "test appended";
+	std::string actual = "test";
+
+	//Act
+	Ncl::stringAppend(actual, " appended\0test");
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-string get appended, manual size", "[stringAppend]" )
+{
+	//Arrange
+	std::string expected = "test appended";
+	std::string actual = "test";
+	const char appendStr[] = " appended\0test";
+
+	//Act
+	Ncl::stringAppend(actual, appendStr, sizeof(appendStr));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-string with text after null-character get appended, manual size", "[stringAppend]" )
+{
+	//Arrange
+	std::string expected = "test appended";
+	std::string actual = "test";
+	const char appendStr[] = " appended";
+
+	//Act
+	Ncl::stringAppend(actual, appendStr, sizeof(appendStr));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "equal c-strings return true", "[strEquals]" )
+{
+	//Arrange
+	const bool expected = true;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "test";
+
+	//Act
+	bool actual = Ncl::strEquals(compareStr, sizeof(compareStr),
+								 compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "not equal c-strings return false", "[strEquals]" )
+{
+	//Arrange
+	const bool expected = false;
+	const char compareStr[] = "test";
+	const char compareStr2[] = " test";
+
+	//Act
+	bool actual = Ncl::strEquals(compareStr, sizeof(compareStr),
+								 compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "equal c-strings return true", "[strEqualsIc]" )
+{
+	//Arrange
+	const bool expected = true;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "test";
+
+	//Act
+	bool actual = Ncl::strEqualsIc(compareStr, sizeof(compareStr),
+								 compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "not equal c-strings return false", "[strEqualsIc]" )
+{
+	//Arrange
+	const bool expected = false;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "testt";
+
+	//Act
+	bool actual = Ncl::strEqualsIc(compareStr, sizeof(compareStr),
+								   compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-strings with letter case difference return true", "[strEqualsIc]" )
+{
+	//Arrange
+	const bool expected = true;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "TEST";
+
+	//Act
+	bool actual = Ncl::strEqualsIc(compareStr, sizeof(compareStr),
+								 compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-strings with whitespace difference return false", "[strEqualsIc]" )
+{
+	//Arrange
+	const bool expected = false;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "test ";
+
+	//Act
+	bool actual = Ncl::strEqualsIc(compareStr, sizeof(compareStr),
+								 compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "equal c-strings return true", "[strEqualsIws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "test";
+
+	//Act
+	bool actual = Ncl::strEqualsIws(compareStr, sizeof(compareStr),
+								   compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "not equal c-strings return false", "[strEqualsIws]" )
+{
+	//Arrange
+	const bool expected = false;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "test t";
+
+	//Act
+	bool actual = Ncl::strEqualsIws(compareStr, sizeof(compareStr),
+									 compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "empty c-string and whitespace c-string return true", "[strEqualsIws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const char compareStr[] = "";
+	const char compareStr2[] = "     \t\n   ";
+
+	//Act
+	bool actual = Ncl::strEqualsIws(compareStr, sizeof(compareStr),
+									compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-strings with letter case difference return false", "[strEqualsIws]" )
+{
+	//Arrange
+	const bool expected = false;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "TEST";
+
+	//Act
+	bool actual = Ncl::strEqualsIws(compareStr, sizeof(compareStr),
+								   compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-strings with whitespace difference return true", "[strEqualsIws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "test ";
+
+	//Act
+	bool actual = Ncl::strEqualsIws(compareStr, sizeof(compareStr),
+								   compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "equal c-strings return true", "[strEqualsIcws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "test";
+
+	//Act
+	bool actual = Ncl::strEqualsIcws(compareStr, sizeof(compareStr),
+									compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "not equal c-strings return false", "[strEqualsIcws]" )
+{
+	//Arrange
+	const bool expected = false;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "test t";
+
+	//Act
+	bool actual = Ncl::strEqualsIcws(compareStr, sizeof(compareStr),
+									 compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "empty c-string and whitespace c-string return true", "[strEqualsIcws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const char compareStr[] = "";
+	const char compareStr2[] = "     \t\n   ";
+
+	//Act
+	bool actual = Ncl::strEqualsIcws(compareStr, sizeof(compareStr),
+									 compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-strings with letter case difference return true", "[strEqualsIcws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "TEST";
+
+	//Act
+	bool actual = Ncl::strEqualsIcws(compareStr, sizeof(compareStr),
+									compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-strings with whitespace difference return true", "[strEqualsIcws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "test ";
+
+	//Act
+	bool actual = Ncl::strEqualsIcws(compareStr, sizeof(compareStr),
+									compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-strings with whitespace and letter case differences return true", "[strEqualsIcws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const char compareStr[] = "test";
+	const char compareStr2[] = "TESt ";
+
+	//Act
+	bool actual = Ncl::strEqualsIcws(compareStr, sizeof(compareStr),
+									 compareStr2, sizeof(compareStr2));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
 #pragma clang diagnostic pop
 #pragma warning (pop)

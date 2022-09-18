@@ -149,6 +149,78 @@ namespace Ncl
 
 	void strEnsureNullTerminated(const char *str, size_t size);
 
+	auto strEquals(const char* firstStr, size_t firstStrSize, const char* secondStr, size_t secondStrSize) -> bool;
+
+	auto strEqualsIc(const char* firstStr, size_t firstStrSize, const char* secondStr, size_t secondStrSize) -> bool;
+
+	auto strEqualsIws(const char* firstStr, size_t firstStrSize, const char* secondStr, size_t secondStrSize) -> bool;
+
+	auto strEqualsIcws(const char* firstStr, size_t firstStrSize, const char* secondStr, size_t secondStrSize) -> bool;
+
+	template<std::size_t N>
+	auto strEquals(const char* firstStr, size_t firstStrSize, const char(&secondStr)[N]) -> bool
+	{
+		return strEquals(firstStr, firstStrSize, secondStr, N);
+	}
+
+	template<std::size_t N>
+	auto strEqualsIc(const char* firstStr, size_t firstStrSize, const char(&secondStr)[N]) -> bool
+	{
+		return strEqualsIc(firstStr, firstStrSize, secondStr, N);
+	}
+
+	template<std::size_t N>
+	auto strEqualsIws(const char* firstStr, size_t firstStrSize, const char(&secondStr)[N]) -> bool
+	{
+		return strEqualsIws(firstStr, firstStrSize, secondStr, N);
+	}
+
+	template<std::size_t N>
+	auto strEqualsIcws(const char* firstStr, size_t firstStrSize, const char(&secondStr)[N]) -> bool
+	{
+		return strEqualsIcws(firstStr, firstStrSize, secondStr, N);
+	}
+
+	auto stringEquals(const std::string& firstStr, const char* secondStr, size_t secondStrSize) -> bool;
+
+	auto stringEqualsIc(const std::string& firstStr, const char* secondStr, size_t secondStrSize) -> bool;
+
+	auto stringEqualsIws(const std::string& firstStr, const char* secondStr, size_t secondStrSize) -> bool;
+
+	auto stringEqualsIcws(const std::string& firstStr, const char* secondStr, size_t secondStrSize) -> bool;
+
+	auto stringEquals(const std::string& firstStr, const std::string& secondStr) -> bool;
+
+	auto stringEqualsIc(const std::string& firstStr, const std::string& secondStr) -> bool;
+
+	auto stringEqualsIws(const std::string& firstStr, const std::string& secondStr) -> bool;
+
+	auto stringEqualsIcws(const std::string& firstStr, const std::string& secondStr) -> bool;
+
+	template<std::size_t N>
+	auto stringEquals(const std::string& firstStr, const char(&secondStr)[N]) -> bool
+	{
+		return stringEquals(firstStr, secondStr, N);
+	}
+
+	template<std::size_t N>
+	auto stringEqualsIc(const std::string& firstStr, const char(&secondStr)[N]) -> bool
+	{
+		return stringEqualsIc(firstStr, secondStr, N);
+	}
+
+	template<std::size_t N>
+	auto stringEqualsIws(const std::string& firstStr, const char(&secondStr)[N]) -> bool
+	{
+		return stringEqualsIws(firstStr, secondStr, N);
+	}
+
+	template<std::size_t N>
+	auto stringEqualsIcws(const std::string& firstStr, const char(&secondStr)[N]) -> bool
+	{
+		return stringEqualsIcws(firstStr, secondStr, N);
+	}
+
 	void strTrimLeft(char *str, size_t size);
 
 	void strTrimRight(char *str, size_t size);
@@ -176,7 +248,7 @@ namespace Ncl
 
 	auto boolToString(bool value) -> const std::string &;
 
-	auto boolToCCString(bool value) -> CCString &;
+	auto boolToCCString(bool value) -> const CCString &;
 
 	auto strToBool(const char *str, size_t size, bool ignoreCase = false, bool looseMatch = false) -> bool;
 

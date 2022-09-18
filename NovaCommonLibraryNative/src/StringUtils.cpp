@@ -7,11 +7,17 @@
 #include <iostream>
 #include <memory>
 
+using namespace Ncl;
+
 const std::string Ncl::TRUE_STRING = "true";
 
 const std::string Ncl::FALSE_STRING = "false";
 
-constexpr Ncl::CCString::CCString(const char *str, const size_t size, const bool dynamicPtr, const bool mallocPtr)
+const CCString TRUE_CCSTRING = CCString("true");
+
+const CCString FALSE_CCSTRING = CCString("false");
+
+constexpr CCString::CCString(const char *str, const size_t size, const bool dynamicPtr, const bool mallocPtr)
 		: _str(str),
 		  _size(size), _dynamicPtr(dynamicPtr), _mallocPtr(mallocPtr)
 {
@@ -21,7 +27,7 @@ constexpr Ncl::CCString::CCString(const char *str, const size_t size, const bool
 	_length = strnlen(str, size);
 }
 
-Ncl::CCString::~CCString()
+CCString::~CCString()
 {
 	if (!_dynamicPtr)
 		return;
@@ -40,10 +46,10 @@ Ncl::CCString::~CCString()
 	_str = nullptr;
 }
 
-const Ncl::CCString Ncl::CCString::Null(nullptr, 0);
-const Ncl::CCString Ncl::CCString::Empty(Ncl::EMPTY_STR);
+const CCString CCString::Null(nullptr, 0);
+const CCString CCString::Empty(EMPTY_STR);
 
-auto Ncl::CCString::operator[](const size_t i) const -> const char &
+auto CCString::operator[](const size_t i) const -> const char &
 {
 	if (i >= _size)
 		throw std::out_of_range("i is greater than CCString's size");
@@ -51,7 +57,7 @@ auto Ncl::CCString::operator[](const size_t i) const -> const char &
 	return _str[i];
 }
 
-auto Ncl::operator<<(std::ostream &os, const Ncl::CCString &str) -> std::ostream &
+auto Ncl::operator<<(std::ostream &os, const CCString &str) -> std::ostream &
 {
 	if (str.isNull())
 	{
@@ -63,14 +69,14 @@ auto Ncl::operator<<(std::ostream &os, const Ncl::CCString &str) -> std::ostream
 	return os;
 }
 
-Ncl::CString::CString(char *str, const size_t size, const bool dynamicPtr, const bool mallocPtr) : _str(str),
+CString::CString(char *str, const size_t size, const bool dynamicPtr, const bool mallocPtr) : _str(str),
 	_size(size), _dynamicPtr(dynamicPtr), _mallocPtr(mallocPtr)
 {
 	if (size == 0 && str != nullptr)
 		throw std::invalid_argument("size can not be zero when str is not null");
 }
 
-Ncl::CString::CString(const size_t size) : _str(nullptr),
+CString::CString(const size_t size) : _str(nullptr),
 										   _size(size), _dynamicPtr(true), _mallocPtr(false) {
 	if (size == 0)
 		throw std::invalid_argument("size can not be zero");
@@ -78,7 +84,7 @@ Ncl::CString::CString(const size_t size) : _str(nullptr),
 	_str = new char[size]{'\0'};
 }
 
-Ncl::CString::~CString()
+CString::~CString()
 {
 	if (!_dynamicPtr)
 		return;
@@ -97,9 +103,9 @@ Ncl::CString::~CString()
 	_str = nullptr;
 }
 
-const Ncl::CString Ncl::CString::Null(nullptr, 0);
+const CString CString::Null(nullptr, 0);
 
-auto Ncl::CString::operator[](const size_t i) const -> const char &
+auto CString::operator[](const size_t i) const -> const char &
 {
 	if (i >= _size)
 		throw std::out_of_range("i is greater than CString's size");
@@ -107,7 +113,7 @@ auto Ncl::CString::operator[](const size_t i) const -> const char &
 	return _str[i];
 }
 
-auto Ncl::CString::operator[](const size_t i) -> char &
+auto CString::operator[](const size_t i) -> char &
 {
 	if (i >= _size)
 		throw std::out_of_range("i is greater than CString's size");
@@ -115,7 +121,7 @@ auto Ncl::CString::operator[](const size_t i) -> char &
 	return _str[i];
 }
 
-auto Ncl::operator<<(std::ostream &os, const Ncl::CString &str) -> std::ostream &
+auto Ncl::operator<<(std::ostream &os, const CString &str) -> std::ostream &
 {
 	if (str.isNull())
 	{
@@ -140,6 +146,284 @@ void Ncl::strEnsureNullTerminated(const char *str, const size_t size)
 {
 	if (!strIsNullTerminated(str, size))
 		throw std::invalid_argument("str is not a null-terminated string");
+}
+
+auto Ncl::strEquals(const char *firstStr, size_t firstStrSize, const char *secondStr, size_t secondStrSize) -> bool
+{
+	if (firstStr == nullptr && secondStr == nullptr)
+		return true;
+	if (firstStr == nullptr || secondStr == nullptr)
+		return false;
+
+	if (firstStrSize == 0 && secondStrSize == 0)
+		return true;
+
+	size_t firstStrLength = strnlen(firstStr, firstStrSize);
+	size_t secondStrLength = strnlen(secondStr, secondStrSize);
+
+	if (firstStrLength != secondStrLength)
+		return false;
+
+	for(size_t i = 0; i < secondStrLength; i++)
+	{
+		const char& firstChar = firstStr[i];
+		const char& secondChar = secondStr[i];
+
+		if (firstChar != secondChar)
+			return false;
+	}
+
+	return true;
+}
+
+auto Ncl::strEqualsIc(const char *firstStr, size_t firstStrSize, const char *secondStr, size_t secondStrSize) -> bool
+{
+	if (firstStr == nullptr && secondStr == nullptr)
+		return true;
+	if (firstStr == nullptr || secondStr == nullptr)
+		return false;
+
+	if (firstStrSize == 0 && secondStrSize == 0)
+		return true;
+
+	size_t firstStrLength = strnlen(firstStr, firstStrSize);
+	size_t secondStrLength = strnlen(secondStr, secondStrSize);
+
+	if (firstStrLength != secondStrLength)
+		return false;
+
+	for(size_t i = 0; i < secondStrLength; i++)
+	{
+		const char& firstChar = firstStr[i];
+		const char& secondChar = secondStr[i];
+
+		if (tolower(firstChar) != tolower(secondChar))
+			return false;
+	}
+
+	return true;
+}
+
+auto Ncl::strEqualsIws(const char* firstStr, size_t firstStrSize, const char* secondStr, size_t secondStrSize) -> bool
+{
+	if (firstStr == nullptr && secondStr == nullptr)
+		return true;
+	if (firstStr == nullptr || secondStr == nullptr)
+		return false;
+
+	if (firstStrSize == 0 && secondStrSize == 0)
+		return true;
+
+	size_t firstStrLength = strnlen(firstStr, firstStrSize);
+	size_t secondStrLength = strnlen(secondStr, secondStrSize);
+
+	if (firstStrLength == 0 && secondStrLength == 0)
+		return true;
+
+	size_t i = 0;
+	size_t j = 0;
+
+	while(i < firstStrLength || j < secondStrLength)
+	{
+		//Get the next non-whitespace character (unless nothing else left) in first string
+		char firstChar = firstStr[i];
+		while(i < firstStrLength && isspace(firstChar))
+		{
+			i++;
+			firstChar = firstStr[i];
+		}
+
+		//Get the next non-whitespace character (unless nothing else left) in second string
+		char secondChar = secondStr[j];
+		while(j < secondStrLength && isspace(secondChar))
+		{
+			j++;
+			secondChar = secondStr[j];
+		}
+
+		//Check for special match cases
+		if (firstChar == '\0' || secondChar == '\0')
+		{
+			if (firstChar == '\0' && secondChar == '\0')
+				return true;
+			if (isspace(firstChar) || isspace(secondChar))
+				return true;
+			return false;
+		}
+		if (isspace(firstChar) && isspace(secondChar))
+			return true;
+
+		if (firstChar != secondChar)
+			return false;
+
+		if (i < firstStrLength)
+		{
+			i++;
+		}
+
+		if (j < secondStrLength)
+		{
+			j++;
+		}
+	}
+
+	if (i < firstStrLength || j < secondStrLength)
+		return false;
+
+	return true;
+}
+
+auto Ncl::strEqualsIcws(const char* firstStr, size_t firstStrSize, const char* secondStr, size_t secondStrSize) -> bool
+{
+	if (firstStr == nullptr && secondStr == nullptr)
+		return true;
+	if (firstStr == nullptr || secondStr == nullptr)
+		return false;
+
+	if (firstStrSize == 0 && secondStrSize == 0)
+		return true;
+
+	size_t firstStrLength = strnlen(firstStr, firstStrSize);
+	size_t secondStrLength = strnlen(secondStr, secondStrSize);
+
+	if (firstStrLength == 0 && secondStrLength == 0)
+		return true;
+
+	size_t i = 0;
+	size_t j = 0;
+
+	while(i < firstStrLength || j < secondStrLength)
+	{
+		//Get the next non-whitespace character (unless nothing else left) in first string
+		char firstChar = firstStr[i];
+		while(i < firstStrLength && isspace(firstChar))
+		{
+			i++;
+			firstChar = firstStr[i];
+		}
+
+		//Get the next non-whitespace character (unless nothing else left) in second string
+		char secondChar = secondStr[j];
+		while(j < secondStrLength && isspace(secondChar))
+		{
+			j++;
+			secondChar = secondStr[j];
+		}
+
+		//Check for special match cases
+		if (firstChar == '\0' || secondChar == '\0')
+		{
+			if (firstChar == '\0' && secondChar == '\0')
+				return true;
+			if (isspace(firstChar) || isspace(secondChar))
+				return true;
+			return false;
+		}
+		if (isspace(firstChar) && isspace(secondChar))
+			return true;
+
+		if (tolower(firstChar) != tolower(secondChar))
+			return false;
+
+		if (i < firstStrLength)
+		{
+			i++;
+		}
+
+		if (j < secondStrLength)
+		{
+			j++;
+		}
+	}
+
+	if (i < firstStrLength || j < secondStrLength)
+		return false;
+
+	return true;
+}
+
+auto Ncl::stringEquals(const std::string &firstStr, const char *secondStr, size_t secondStrSize) -> bool
+{
+	if (secondStr == nullptr || secondStrSize == 0)
+		return false;
+
+	//Check for empty string
+	if (firstStr.length() == 0 && secondStr[0] == '\0')
+		return true;
+
+	size_t secondStrLength = strnlen(secondStr, secondStrSize);
+
+	if (firstStr.length() != secondStrLength)
+		return false;
+
+	for(size_t i = 0; i < secondStrLength; i++)
+	{
+		const char& firstChar = firstStr[i];
+		const char& secondChar = secondStr[i];
+
+		if (firstChar != secondChar)
+			return false;
+	}
+
+	return true;
+}
+
+auto Ncl::stringEqualsIc(const std::string &firstStr, const char *secondStr, size_t secondStrSize) -> bool
+{
+	if (secondStr == nullptr || secondStrSize == 0)
+		return false;
+
+	size_t firstStrLength = firstStr.length();
+	size_t secondStrLength = strnlen(secondStr, secondStrSize);
+
+	if (firstStrLength != secondStrLength)
+		return false;
+
+	for(size_t i = 0; i < secondStrLength; i++)
+	{
+		const char& firstChar = firstStr[i];
+		const char& secondChar = secondStr[i];
+
+		if (tolower(firstChar) != tolower(secondChar))
+			return false;
+	}
+
+	return true;
+}
+
+auto Ncl::stringEqualsIws(const std::string &firstStr, const char *secondStr, size_t secondStrSize) -> bool
+{
+	//TODO: Implement
+	return false;
+}
+
+auto Ncl::stringEqualsIcws(const std::string &firstStr, const char *secondStr, size_t secondStrSize) -> bool
+{
+	//TODO: Implement
+	return false;
+}
+
+auto Ncl::stringEquals(const std::string &firstStr, const std::string &secondStr) -> bool
+{
+	return firstStr == secondStr;
+}
+
+auto Ncl::stringEqualsIc(const std::string &firstStr, const std::string &secondStr) -> bool
+{
+	//TODO: Implement
+	return false;
+}
+
+auto Ncl::stringEqualsIws(const std::string &firstStr, const std::string &secondStr) -> bool
+{
+	//TODO: Implement
+	return false;
+}
+
+auto Ncl::stringEqualsIcws(const std::string &firstStr, const std::string &secondStr) -> bool
+{
+	//TODO: Implement
+	return false;
 }
 
 void Ncl::strTrimLeft(char *str, const size_t size)
@@ -280,12 +564,100 @@ void Ncl::stringAppend(std::string &str, const char *strToAppend, size_t strToAp
 	str.append(strToAppend, length);
 }
 
+auto Ncl::boolToString(bool value) -> const std::string &
+{
+	return value ? TRUE_STRING : FALSE_STRING;
+}
+
+auto Ncl::boolToCCString(bool value) -> const CCString &
+{
+	return value ? TRUE_CCSTRING : FALSE_CCSTRING;
+}
+
+auto Ncl::strToBool(const char *str, size_t size, bool ignoreCase, bool looseMatch) -> bool
+{
+	if (str == nullptr || size == 0)
+		return false;
+
+	if (!looseMatch)
+	{
+		if (ignoreCase)
+		{
+			return strEqualsIc(str, size, TRUE_STR, TRUE_STR_SIZE);
+		}
+
+		return strEquals(str, size, TRUE_STR, TRUE_STR_SIZE);
+	}
+
+	if (ignoreCase)
+	{
+		if (strEqualsIcws(str, size, TRUE_STR, TRUE_STR_SIZE))
+			return true;
+		if (strEqualsIcws(str, size, "yes"))
+			return true;
+
+		if (strEqualsIcws(str, size, "on"))
+			return true;
+
+		return false;
+	}
+
+	if (strEqualsIws(str, size, TRUE_STR, TRUE_STR_SIZE))
+		return true;
+	if (strEqualsIws(str, size, "yes"))
+		return true;
+
+	if (strEqualsIws(str, size, "on"))
+		return true;
+
+	return false;
+}
+
+auto stringToBool(const std::string &str, bool ignoreCase, bool looseMatch) -> bool
+{
+	if (str.length() == 0)
+		return false;
+
+	if (!looseMatch)
+	{
+		if (ignoreCase)
+		{
+			return stringEqualsIc(str, TRUE_STRING);
+		}
+
+		return stringEquals(str, TRUE_STRING);
+	}
+
+	if (ignoreCase)
+	{
+		if (stringEqualsIcws(str, TRUE_STRING))
+			return true;
+		if (stringEqualsIcws(str, "yes"))
+			return true;
+
+		if (stringEqualsIcws(str, "on"))
+			return true;
+
+		return false;
+	}
+
+	if (stringEqualsIws(str, TRUE_STR, TRUE_STR_SIZE))
+		return true;
+	if (stringEqualsIws(str, "yes"))
+		return true;
+
+	if (stringEqualsIws(str, "on"))
+		return true;
+
+	return false;
+}
+
 #pragma warning(push)
 #pragma warning (disable : 4068 ) //Disable unknown paragmas
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "modernize-avoid-c-arrays"
 
-void Ncl::CString::resize(const size_t size, const bool retainContents)
+void CString::resize(const size_t size, const bool retainContents)
 {
 	const size_t oldSize = _size;
 	_size = size;
@@ -320,7 +692,7 @@ void Ncl::CString::resize(const size_t size, const bool retainContents)
 #pragma clang diagnostic pop
 #pragma warning(pop)
 
-void Ncl::CString::copy(const char *ptr, const size_t size, const bool allowResizing)
+void CString::copy(const char *ptr, const size_t size, const bool allowResizing)
 {
 	if (ptr == nullptr || size == 0)
 	{
@@ -345,7 +717,7 @@ void Ncl::CString::copy(const char *ptr, const size_t size, const bool allowResi
 	strncpy_s(_str, _size, ptr, size);
 }
 
-void Ncl::CString::deletePtr()
+void CString::deletePtr()
 {
 	if (_str == nullptr)
 		return;
