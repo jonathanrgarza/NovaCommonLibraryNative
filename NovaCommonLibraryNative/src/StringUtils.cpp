@@ -163,12 +163,12 @@ auto Ncl::strLength(const char *str, size_t strSize) -> size_t
 	return strSize;
 }
 
-void Ncl::strCopy(char *dest, size_t destSize, const char *src, size_t srcSize)
+auto Ncl::strCopy(char *dest, size_t destSize, const char *src, size_t srcSize) -> size_t
 {
 	if (dest == nullptr || destSize == 0)
-		return;
+		return 0;
 	if (src == nullptr || srcSize == 0)
-		return;
+		return 0;
 
 	size_t size = destSize < srcSize ? destSize : srcSize;
 
@@ -182,24 +182,37 @@ void Ncl::strCopy(char *dest, size_t destSize, const char *src, size_t srcSize)
 	}
 
 	dest[i] = '\0';
+	return i;
 }
 
-void Ncl::strCat(char *dest, size_t destSize, const char *src, size_t srcSize)
+auto Ncl::strCat(char *dest, size_t destSize, const char *src, size_t srcSize) -> size_t
 {
 	if (dest == nullptr || destSize == 0)
-		return;
+		return 0;
 	if (src == nullptr || srcSize == 0)
-		return;
+		return 0;
 
-	size_t srcLength = strLength(src, srcSize);
-
-	if (srcLength == 0)
-		return;
+	if (src[0] == '\0')
+		return 0;
 
 	size_t destLength = strLength(dest, destSize);
+	size_t remainingDestSize = destSize - destLength;
 
-	//size_t appendLength = srcLength < destSize - destLength ? srcLength -
-	//TODO: Finish implementation
+	//Check if any room left in dest
+	if (remainingDestSize <= 1)
+		return 0;
+
+	size_t minSize = srcSize < remainingDestSize ? srcSize : remainingDestSize;
+
+	size_t i;
+	for (i = 0; i < minSize; i++)
+	{
+		size_t destIndex = destLength + i;
+		dest[destIndex] = src[i];
+	}
+
+	dest[destLength + i] = '\0';
+	return i;
 }
 
 auto Ncl::strEquals(const char *firstStr, size_t firstStrSize, const char *secondStr, size_t secondStrSize) -> bool

@@ -173,44 +173,44 @@ namespace Ncl
         return N;
     }
     
-    void strCopy(char* dest, size_t destSize, const char* src, size_t srcSize);
+    auto strCopy(char* dest, size_t destSize, const char* src, size_t srcSize) -> size_t;
 
     template<std::size_t N>
-    void strCopy(char* dest, size_t destSize, const char(&src)[N])
+	auto strCopy(char* dest, size_t destSize, const char(&src)[N]) -> size_t
     {
-        strCopy(dest, destSize, src, N);
+        return strCopy(dest, destSize, src, N);
     }
 
     template<std::size_t N>
-    void strCopy(char(&dest)[N], const char* src, size_t srcSize)
+	auto strCopy(char(&dest)[N], const char* src, size_t srcSize) -> size_t
     {
-        strCopy(dest, N, src, srcSize);
+		return strCopy(dest, N, src, srcSize);
     }
 
     template<std::size_t N, std::size_t S>
-    void strCopy(char(&dest)[N], const char(&src)[S])
+	auto strCopy(char(&dest)[N], const char(&src)[S]) -> size_t
     {
-        strCopy(dest, N, src, S);
+		return strCopy(dest, N, src, S);
     }
 
-    void strCat(char* dest, size_t destSize, const char* src, size_t srcSize);
+    auto strCat(char* dest, size_t destSize, const char* src, size_t srcSize) -> size_t;
 
     template<std::size_t N>
-    void strCat(char* dest, size_t destSize, const char(&src)[N])
+	auto strCat(char* dest, size_t destSize, const char(&src)[N]) -> size_t
     {
-        strCat(dest, destSize, src, N);
+        return strCat(dest, destSize, src, N);
     }
 
     template<std::size_t N>
-    void strCat(char(&dest)[N], const char* src, size_t srcSize)
+	auto strCat(char(&dest)[N], const char* src, size_t srcSize) -> size_t
     {
-        strCat(dest, N, src, srcSize);
+        return strCat(dest, N, src, srcSize);
     }
 
     template<std::size_t N, std::size_t S>
-    void strCat(char(&dest)[N], const char(&src)[S])
+	auto strCat(char(&dest)[N], const char(&src)[S]) -> size_t
     {
-        strCat(dest, N, src, S);
+        return strCat(dest, N, src, S);
     }
 
 	auto strEquals(const char* firstStr, size_t firstStrSize, const char* secondStr, size_t secondStrSize) -> bool;
