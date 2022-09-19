@@ -481,14 +481,130 @@ auto Ncl::stringEqualsIc(const std::string &firstStr, const char *secondStr, siz
 
 auto Ncl::stringEqualsIws(const std::string &firstStr, const char *secondStr, size_t secondStrSize) -> bool
 {
-	//TODO: Implement
-	return false;
+	if (secondStr == nullptr || secondStrSize == 0)
+		return false;
+
+	size_t firstStrLength = firstStr.length();
+	size_t secondStrLength = strnlen(secondStr, secondStrSize);
+
+	if (firstStrLength == 0 && secondStrLength == 0)
+		return true;
+
+	size_t i = 0;
+	size_t j = 0;
+
+	while(i < firstStrLength || j < secondStrLength)
+	{
+		//Get the next non-whitespace character (unless nothing else left) in first string
+		char firstChar = firstStr[i];
+		while(i < firstStrLength && isspace(firstChar))
+		{
+			i++;
+			firstChar = firstStr[i];
+		}
+
+		//Get the next non-whitespace character (unless nothing else left) in second string
+		char secondChar = secondStr[j];
+		while(j < secondStrLength && isspace(secondChar))
+		{
+			j++;
+			secondChar = secondStr[j];
+		}
+
+		//Check for special match cases
+		if (firstChar == '\0' || secondChar == '\0')
+		{
+			if (firstChar == '\0' && secondChar == '\0')
+				return true;
+			if (isspace(firstChar) || isspace(secondChar))
+				return true;
+			return false;
+		}
+		if (isspace(firstChar) && isspace(secondChar))
+			return true;
+
+		if (firstChar != secondChar)
+			return false;
+
+		if (i < firstStrLength)
+		{
+			i++;
+		}
+
+		if (j < secondStrLength)
+		{
+			j++;
+		}
+	}
+
+	if (i < firstStrLength || j < secondStrLength)
+		return false;
+
+	return true;
 }
 
 auto Ncl::stringEqualsIcws(const std::string &firstStr, const char *secondStr, size_t secondStrSize) -> bool
 {
-	//TODO: Implement
-	return false;
+	if (secondStr == nullptr || secondStrSize == 0)
+		return false;
+
+	size_t firstStrLength = firstStr.length();
+	size_t secondStrLength = strnlen(secondStr, secondStrSize);
+
+	if (firstStrLength == 0 && secondStrLength == 0)
+		return true;
+
+	size_t i = 0;
+	size_t j = 0;
+
+	while(i < firstStrLength || j < secondStrLength)
+	{
+		//Get the next non-whitespace character (unless nothing else left) in first string
+		char firstChar = firstStr[i];
+		while(i < firstStrLength && isspace(firstChar))
+		{
+			i++;
+			firstChar = firstStr[i];
+		}
+
+		//Get the next non-whitespace character (unless nothing else left) in second string
+		char secondChar = secondStr[j];
+		while(j < secondStrLength && isspace(secondChar))
+		{
+			j++;
+			secondChar = secondStr[j];
+		}
+
+		//Check for special match cases
+		if (firstChar == '\0' || secondChar == '\0')
+		{
+			if (firstChar == '\0' && secondChar == '\0')
+				return true;
+			if (isspace(firstChar) || isspace(secondChar))
+				return true;
+			return false;
+		}
+		if (isspace(firstChar) && isspace(secondChar))
+			return true;
+
+		if (tolower(firstChar) != tolower(secondChar))
+			return false;
+
+		if (i < firstStrLength)
+		{
+			i++;
+		}
+
+		if (j < secondStrLength)
+		{
+			j++;
+		}
+	}
+
+	if (i < firstStrLength || j < secondStrLength)
+		return false;
+
+	return true;
 }
 
 auto Ncl::stringEquals(const std::string &firstStr, const std::string &secondStr) -> bool
@@ -498,20 +614,128 @@ auto Ncl::stringEquals(const std::string &firstStr, const std::string &secondStr
 
 auto Ncl::stringEqualsIc(const std::string &firstStr, const std::string &secondStr) -> bool
 {
-	//TODO: Implement
-	return false;
+	size_t firstStrLength = firstStr.length();
+	size_t secondStrLength = secondStr.length();
+
+	if (firstStrLength != secondStrLength)
+		return false;
+
+	for(size_t i = 0; i < secondStrLength; i++)
+	{
+		const char& firstChar = firstStr[i];
+		const char& secondChar = secondStr[i];
+
+		if (tolower(firstChar) != tolower(secondChar))
+			return false;
+	}
+
+	return true;
 }
 
 auto Ncl::stringEqualsIws(const std::string &firstStr, const std::string &secondStr) -> bool
 {
-	//TODO: Implement
-	return false;
+	size_t firstStrLength = firstStr.length();
+	size_t secondStrLength = secondStr.length();
+
+	if (firstStrLength == 0 && secondStrLength == 0)
+		return true;
+
+	size_t i = 0;
+	size_t j = 0;
+
+	while(i < firstStrLength || j < secondStrLength)
+	{
+		//Get the next non-whitespace character (unless nothing else left) in first string
+		char firstChar = firstStr[i];
+		while(i < firstStrLength && isspace(firstChar))
+		{
+			i++;
+			firstChar = firstStr[i];
+		}
+
+		//Get the next non-whitespace character (unless nothing else left) in second string
+		char secondChar = secondStr[j];
+		while(j < secondStrLength && isspace(secondChar))
+		{
+			j++;
+			secondChar = secondStr[j];
+		}
+
+		//Check for special match case
+		if (isspace(firstChar) && isspace(secondChar))
+			return true;
+
+		if (firstChar != secondChar)
+			return false;
+
+		if (i < firstStrLength)
+		{
+			i++;
+		}
+
+		if (j < secondStrLength)
+		{
+			j++;
+		}
+	}
+
+	if (i < firstStrLength || j < secondStrLength)
+		return false;
+
+	return true;
 }
 
 auto Ncl::stringEqualsIcws(const std::string &firstStr, const std::string &secondStr) -> bool
 {
-	//TODO: Implement
-	return false;
+	size_t firstStrLength = firstStr.length();
+	size_t secondStrLength = secondStr.length();
+
+	if (firstStrLength == 0 && secondStrLength == 0)
+		return true;
+
+	size_t i = 0;
+	size_t j = 0;
+
+	while(i < firstStrLength || j < secondStrLength)
+	{
+		//Get the next non-whitespace character (unless nothing else left) in first string
+		char firstChar = firstStr[i];
+		while(i < firstStrLength && isspace(firstChar))
+		{
+			i++;
+			firstChar = firstStr[i];
+		}
+
+		//Get the next non-whitespace character (unless nothing else left) in second string
+		char secondChar = secondStr[j];
+		while(j < secondStrLength && isspace(secondChar))
+		{
+			j++;
+			secondChar = secondStr[j];
+		}
+
+		//Check for special match cases
+		if (isspace(firstChar) && isspace(secondChar))
+			return true;
+
+		if (tolower(firstChar) != tolower(secondChar))
+			return false;
+
+		if (i < firstStrLength)
+		{
+			i++;
+		}
+
+		if (j < secondStrLength)
+		{
+			j++;
+		}
+	}
+
+	if (i < firstStrLength || j < secondStrLength)
+		return false;
+
+	return true;
 }
 
 void Ncl::strTrimLeft(char *str, const size_t size)
