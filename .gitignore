@@ -32,6 +32,7 @@
 /.cmake
 **/cmake-build-debug
 **/cmake-build-debug-visual-studio
+/cmake-build-debug-wsl/
 **/CMakeCache.txt
 **/cmake_install.cmake
 **/install_manifest.txt
@@ -62,3 +63,4 @@ test/test_runner
 *.filters
 *.sln
 *.user
+
