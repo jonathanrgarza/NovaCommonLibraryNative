@@ -148,6 +148,60 @@ void Ncl::strEnsureNullTerminated(const char *str, const size_t size)
 		throw std::invalid_argument("str is not a null-terminated string");
 }
 
+auto Ncl::strLength(const char *str, size_t strSize) -> size_t
+{
+	if (str == nullptr)
+		return 0;
+
+	for (size_t i = 0; i < strSize; ++i)
+	{
+		const char& character = str[i];
+		if (character == '\0')
+			return i;
+	}
+
+	return strSize;
+}
+
+void Ncl::strCopy(char *dest, size_t destSize, const char *src, size_t srcSize)
+{
+	if (dest == nullptr || destSize == 0)
+		return;
+	if (src == nullptr || srcSize == 0)
+		return;
+
+	size_t size = destSize < srcSize ? destSize : srcSize;
+
+	size_t i;
+	for (i = 0; i < size; ++i)
+	{
+		const char& character = src[i];
+		if (character == '\0')
+			break;
+		dest[i] = character;
+	}
+
+	dest[i] = '\0';
+}
+
+void Ncl::strCat(char *dest, size_t destSize, const char *src, size_t srcSize)
+{
+	if (dest == nullptr || destSize == 0)
+		return;
+	if (src == nullptr || srcSize == 0)
+		return;
+
+	size_t srcLength = strLength(src, srcSize);
+
+	if (srcLength == 0)
+		return;
+
+	size_t destLength = strLength(dest, destSize);
+
+	//size_t appendLength = srcLength < destSize - destLength ? srcLength -
+	//TODO: Finish implementation
+}
+
 auto Ncl::strEquals(const char *firstStr, size_t firstStrSize, const char *secondStr, size_t secondStrSize) -> bool
 {
 	if (firstStr == nullptr && secondStr == nullptr)
@@ -611,60 +665,6 @@ auto Ncl::strToBool(const char *str, size_t size, bool ignoreCase, bool looseMat
 		return true;
 
 	return false;
-}
-
-auto Ncl::strLength(const char *str, size_t strSize) -> size_t
-{
-    if (str == nullptr)
-        return 0;
-    
-    for (size_t i = 0; i < strSize; ++i)
-    {
-        const char& character = str[i];
-        if (character == '\0')
-            return i;
-    }
-
-    return strSize;
-}
-
-void Ncl::strCopy(char *dest, size_t destSize, const char *src, size_t srcSize)
-{
-    if (dest == nullptr || destSize == 0)
-        return;
-    if (src == nullptr || srcSize == 0)
-        return;
-
-    size_t size = destSize < srcSize ? destSize : srcSize;
-
-    size_t i;
-    for (i = 0; i < size; ++i)
-    {
-        const char& character = src[i];
-        if (character == '\0')
-            break;
-        dest[i] = character;
-    }
-
-    dest[i] = '\0';
-}
-
-void Ncl::strCat(char *dest, size_t destSize, const char *src, size_t srcSize)
-{
-    if (dest == nullptr || destSize == 0)
-        return;
-    if (src == nullptr || srcSize == 0)
-        return;
-    
-    size_t srcLength = strLength(src, srcSize);
-
-    if (srcLength == 0)
-        return;
-    
-    size_t destLength = strLength(dest, destSize);
-    
-    //size_t appendLength = srcLength < destSize - destLength ? srcLength - 
-    //TODO: Finish implementation
 }
 
 auto stringToBool(const std::string &str, bool ignoreCase, bool looseMatch) -> bool
