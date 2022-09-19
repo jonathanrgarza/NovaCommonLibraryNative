@@ -768,7 +768,7 @@ void CString::resize(const size_t size, const bool retainContents)
 	if (retainContents)
 	{
 		const size_t min = std::min(oldSize, size);
-		strncpy_s(newPtr.get(), size, _str, min);
+		strCopy(newPtr.get(), size, _str, min);
 	}
 
 	deletePtr();
@@ -793,7 +793,7 @@ void CString::copy(const char *ptr, const size_t size, const bool allowResizing)
 
 	if (_size >= size)
 	{
-		strncpy_s(_str, _size, ptr, size);
+		strCopy(_str, _size, ptr, size);
 		return;
 	}
 
@@ -802,7 +802,7 @@ void CString::copy(const char *ptr, const size_t size, const bool allowResizing)
 		throw std::invalid_argument("ptr's size is greater than CString's size");
 
 	resize(size, true);
-	strncpy_s(_str, _size, ptr, size);
+	strCopy(_str, _size, ptr, size);
 }
 
 void CString::deletePtr()

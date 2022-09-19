@@ -6,6 +6,7 @@
 #define NOVACOMMONLIBRARYNATIVE_TESTUTILS_H
 
 #include <string>
+#include <cstring>
 
 template<std::size_t N, std::size_t O>
 auto strEquals(const char(&str)[N], const char(&other)[O]) -> bool // NOLINT(modernize-avoid-c-arrays)

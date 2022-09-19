@@ -6,6 +6,7 @@
 #define NOVACOMMONLIBRARYNATIVE_STRINGUTILS_H
 
 #include <cstdlib>
+#include <cstring>
 #include <string>
 #include "Macros.h"
 

@@ -20,10 +20,8 @@ namespace Ncl
 		FileLogger();
 
 #if defined(_WIN32) || defined(_WIN64)
-
 		FileLogger(const std::string &name, const std::string &version, const std::string &logPath,
 				   bool includeConsoleOutput = false, bool includeDebugOutput = false);
-
 #else
 		FileLogger(const std::string& name, const std::string& version, const std::string& logPath,
 					   bool includeConsoleOutput = false);
