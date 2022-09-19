@@ -148,6 +148,70 @@ namespace Ncl
 	auto strIsNullTerminated(const char *str, size_t size) -> bool;
 
 	void strEnsureNullTerminated(const char *str, size_t size);
+    
+    /// \brief Gets the length of the given c-string.
+    /// \param str The c-string.
+    /// \param strSize The maximum size of the c-string (including the null-terminating character).
+    /// \return The length of the string, or strSize if a null-terminating character is not found.
+    /// Returns 0 if str is a null pointer.
+    auto strLength(const char* str, size_t strSize) -> size_t;
+
+    /// \brief Gets the length of the given c-string.
+    /// \tparam N The maximum size of the c-string (including the null-terminating character).
+    /// \param str The c-string.
+    /// \return The length of the string, or strSize if a null-terminating character is not found.
+    template<std::size_t N>
+    auto strLength(const char(&str)[N]) -> size_t
+    {
+        for (size_t i = 0; i < N; ++i)
+        {
+            const char& character = str[i];
+            if (character == '\0')
+                return i;
+        }
+        
+        return N;
+    }
+    
+    void strCopy(char* dest, size_t destSize, const char* src, size_t srcSize);
+
+    template<std::size_t N>
+    void strCopy(char* dest, size_t destSize, const char(&src)[N])
+    {
+        strCopy(dest, destSize, src, N);
+    }
+
+    template<std::size_t N>
+    void strCopy(char(&dest)[N], const char* src, size_t srcSize)
+    {
+        strCopy(dest, N, src, srcSize);
+    }
+
+    template<std::size_t N, std::size_t S>
+    void strCopy(char(&dest)[N], const char(&src)[S])
+    {
+        strCopy(dest, N, src, S);
+    }
+
+    void strCat(char* dest, size_t destSize, const char* src, size_t srcSize);
+
+    template<std::size_t N>
+    void strCat(char* dest, size_t destSize, const char(&src)[N])
+    {
+        strCat(dest, destSize, src, N);
+    }
+
+    template<std::size_t N>
+    void strCat(char(&dest)[N], const char* src, size_t srcSize)
+    {
+        strCat(dest, N, src, srcSize);
+    }
+
+    template<std::size_t N, std::size_t S>
+    void strCat(char(&dest)[N], const char(&src)[S])
+    {
+        strCat(dest, N, src, S);
+    }
 
 	auto strEquals(const char* firstStr, size_t firstStrSize, const char* secondStr, size_t secondStrSize) -> bool;
 
