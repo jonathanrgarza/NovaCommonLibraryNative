@@ -173,7 +173,7 @@ namespace Ncl
         return N;
     }
     
-    auto strCopy(char* dest, size_t destSize, const char* src, size_t srcSize) -> size_t;
+    auto strCopy(char* dest, size_t destSize, const char* src, size_t maxCount) -> size_t;
 
     template<std::size_t N>
 	auto strCopy(char* dest, size_t destSize, const char(&src)[N]) -> size_t
@@ -193,7 +193,7 @@ namespace Ncl
 		return strCopy(dest, N, src, S);
     }
 
-    auto strCat(char* dest, size_t destSize, const char* src, size_t srcSize) -> size_t;
+    auto strCat(char* dest, size_t destSize, const char* src, size_t maxCount) -> size_t;
 
     template<std::size_t N>
 	auto strCat(char* dest, size_t destSize, const char(&src)[N]) -> size_t

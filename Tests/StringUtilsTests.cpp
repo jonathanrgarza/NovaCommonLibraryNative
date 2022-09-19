@@ -340,7 +340,7 @@ TEST_CASE( "c-string with text after null-character get appended, manual size", 
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "equal c-strings return true", "[strEquals]" )
+TEST_CASE( "equal c-strings returns true", "[strEquals]" )
 {
 	//Arrange
 	const bool expected = true;
@@ -355,7 +355,7 @@ TEST_CASE( "equal c-strings return true", "[strEquals]" )
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "not equal c-strings return false", "[strEquals]" )
+TEST_CASE( "not equal c-strings returns false", "[strEquals]" )
 {
 	//Arrange
 	const bool expected = false;
@@ -370,7 +370,7 @@ TEST_CASE( "not equal c-strings return false", "[strEquals]" )
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "equal c-strings return true", "[strEqualsIc]" )
+TEST_CASE( "equal c-strings returns true", "[strEqualsIc]" )
 {
 	//Arrange
 	const bool expected = true;
@@ -385,7 +385,7 @@ TEST_CASE( "equal c-strings return true", "[strEqualsIc]" )
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "not equal c-strings return false", "[strEqualsIc]" )
+TEST_CASE( "not equal c-strings returns false", "[strEqualsIc]" )
 {
 	//Arrange
 	const bool expected = false;
@@ -400,7 +400,7 @@ TEST_CASE( "not equal c-strings return false", "[strEqualsIc]" )
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "c-strings with letter case difference return true", "[strEqualsIc]" )
+TEST_CASE( "c-strings with letter case difference returns true", "[strEqualsIc]" )
 {
 	//Arrange
 	const bool expected = true;
@@ -415,7 +415,7 @@ TEST_CASE( "c-strings with letter case difference return true", "[strEqualsIc]" 
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "c-strings with whitespace difference return false", "[strEqualsIc]" )
+TEST_CASE( "c-strings with whitespace difference returns false", "[strEqualsIc]" )
 {
 	//Arrange
 	const bool expected = false;
@@ -430,7 +430,7 @@ TEST_CASE( "c-strings with whitespace difference return false", "[strEqualsIc]" 
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "equal c-strings return true", "[strEqualsIws]" )
+TEST_CASE( "equal c-strings returns true", "[strEqualsIws]" )
 {
 	//Arrange
 	const bool expected = true;
@@ -445,7 +445,7 @@ TEST_CASE( "equal c-strings return true", "[strEqualsIws]" )
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "not equal c-strings return false", "[strEqualsIws]" )
+TEST_CASE( "not equal c-strings returns false", "[strEqualsIws]" )
 {
 	//Arrange
 	const bool expected = false;
@@ -460,7 +460,7 @@ TEST_CASE( "not equal c-strings return false", "[strEqualsIws]" )
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "empty c-string and whitespace c-string return true", "[strEqualsIws]" )
+TEST_CASE( "empty c-string and whitespace c-string returns true", "[strEqualsIws]" )
 {
 	//Arrange
 	const bool expected = true;
@@ -475,7 +475,7 @@ TEST_CASE( "empty c-string and whitespace c-string return true", "[strEqualsIws]
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "c-strings with letter case difference return false", "[strEqualsIws]" )
+TEST_CASE( "c-strings with letter case difference returns false", "[strEqualsIws]" )
 {
 	//Arrange
 	const bool expected = false;
@@ -490,7 +490,7 @@ TEST_CASE( "c-strings with letter case difference return false", "[strEqualsIws]
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "c-strings with whitespace difference return true", "[strEqualsIws]" )
+TEST_CASE( "c-strings with whitespace difference returns true", "[strEqualsIws]" )
 {
 	//Arrange
 	const bool expected = true;
@@ -505,7 +505,7 @@ TEST_CASE( "c-strings with whitespace difference return true", "[strEqualsIws]" 
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "equal c-strings return true", "[strEqualsIcws]" )
+TEST_CASE( "equal c-strings returns true", "[strEqualsIcws]" )
 {
 	//Arrange
 	const bool expected = true;
@@ -520,7 +520,7 @@ TEST_CASE( "equal c-strings return true", "[strEqualsIcws]" )
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "not equal c-strings return false", "[strEqualsIcws]" )
+TEST_CASE( "not equal c-strings returns false", "[strEqualsIcws]" )
 {
 	//Arrange
 	const bool expected = false;
@@ -535,7 +535,7 @@ TEST_CASE( "not equal c-strings return false", "[strEqualsIcws]" )
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "empty c-string and whitespace c-string return true", "[strEqualsIcws]" )
+TEST_CASE( "empty c-string and whitespace c-string returns true", "[strEqualsIcws]" )
 {
 	//Arrange
 	const bool expected = true;
@@ -550,7 +550,7 @@ TEST_CASE( "empty c-string and whitespace c-string return true", "[strEqualsIcws
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "c-strings with letter case difference return true", "[strEqualsIcws]" )
+TEST_CASE( "c-strings with letter case difference returns true", "[strEqualsIcws]" )
 {
 	//Arrange
 	const bool expected = true;
@@ -565,7 +565,7 @@ TEST_CASE( "c-strings with letter case difference return true", "[strEqualsIcws]
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "c-strings with whitespace difference return true", "[strEqualsIcws]" )
+TEST_CASE( "c-strings with whitespace difference returns true", "[strEqualsIcws]" )
 {
 	//Arrange
 	const bool expected = true;
@@ -580,7 +580,7 @@ TEST_CASE( "c-strings with whitespace difference return true", "[strEqualsIcws]"
 	REQUIRE(expected == actual);
 }
 
-TEST_CASE( "c-strings with whitespace and letter case differences return true", "[strEqualsIcws]" )
+TEST_CASE( "c-strings with whitespace and letter case differences returns true", "[strEqualsIcws]" )
 {
 	//Arrange
 	const bool expected = true;
@@ -593,6 +593,220 @@ TEST_CASE( "c-strings with whitespace and letter case differences return true", 
 
 	//Assert
 	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-string with 1 character returns 1", "[strLength]" )
+{
+	//Arrange
+	const size_t expected = 1;
+	const char testStr[] = "t";
+
+	//Act
+	size_t actual = Ncl::strLength(testStr, sizeof(testStr));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-string with 0 characters returns 0", "[strLength]" )
+{
+	//Arrange
+	const size_t expected = 0;
+	const char testStr[] = "";
+
+	//Act
+	size_t actual = Ncl::strLength(testStr, sizeof(testStr));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "c-string with 2 characters and no null-terminator returns 3", "[strLength]" )
+{
+	//Arrange
+	const size_t expected = 3;
+	char testStr[3] {};
+	testStr[0] = '1';
+	testStr[1] = '2';
+	testStr[2] = '3';
+
+	//Act
+	size_t actual = Ncl::strLength(testStr, sizeof(testStr));
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "null c-string returns 0", "[strLength]" )
+{
+	//Arrange
+	const size_t expected = 0;
+
+	//Act
+	size_t actual = Ncl::strLength(nullptr, 0);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "src c-string of length 4 copies into dest buffer of size 5 and returns 4", "[strCopy]" )
+{
+	//Arrange
+	const size_t expected = 4;
+	char testStr[5] {};
+	const char srcStr[] = "test";
+
+	//Act
+	size_t actual = Ncl::strCopy(testStr, sizeof(testStr), srcStr, sizeof(srcStr));
+
+	//Assert
+	REQUIRE(expected == actual);
+	STR_EQUAL_REQUIRE("test", testStr);
+}
+
+TEST_CASE( "src c-string of length 0 copies into dest buffer of size 5 and returns 0", "[strCopy]" )
+{
+	//Arrange
+	const size_t expected = 0;
+	char testStr[] = "test";
+	const char srcStr[] = "";
+
+	//Act
+	size_t actual = Ncl::strCopy(testStr, sizeof(testStr), srcStr, sizeof(srcStr));
+
+	//Assert
+	REQUIRE(expected == actual);
+	STR_EQUAL_REQUIRE("", testStr);
+}
+
+TEST_CASE( "src c-string of length 4 copies into dest buffer of size 3 and returns 3", "[strCopy]" )
+{
+	//Arrange
+	const size_t expected = 3;
+	char testStr[3] {};
+	const char srcStr[] = "test";
+
+	//Act
+	size_t actual = Ncl::strCopy(testStr, sizeof(testStr), srcStr, sizeof(srcStr));
+
+	//Assert
+	REQUIRE(expected == actual);
+	STR_EQUAL_REQUIRE("te", testStr);
+}
+
+TEST_CASE( "src c-string of length 5 copies 3 characters into dest buffer of size 5 and returns 3", "[strCopy]" )
+{
+	//Arrange
+	const size_t expected = 3;
+	char testStr[5] {};
+	const char srcStr[] = "test";
+
+	//Act
+	size_t actual = Ncl::strCopy(testStr, sizeof(testStr), srcStr, sizeof(srcStr) - 2);
+
+	//Assert
+	REQUIRE(expected == actual);
+	STR_EQUAL_REQUIRE("te", testStr);
+}
+
+TEST_CASE( "null c-string returns 0", "[strCopy]" )
+{
+	//Arrange
+	const size_t expected = 0;
+
+	//Act
+	size_t actual = Ncl::strCopy(nullptr, 0, nullptr, 0);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "src c-string of length 4 appends into dest buffer of size 5 and returns 4", "[strCat]" )
+{
+	//Arrange
+	const size_t expected = 4;
+	char testStr[5] {};
+	const char srcStr[] = "test";
+
+	//Act
+	size_t actual = Ncl::strCat(testStr, sizeof(testStr), srcStr, sizeof(srcStr));
+
+	//Assert
+	REQUIRE(expected == actual);
+	STR_EQUAL_REQUIRE("test", testStr);
+}
+
+TEST_CASE( "src c-string of length 0 appends into dest buffer of size 5 and returns 0", "[strCat]" )
+{
+	//Arrange
+	const size_t expected = 0;
+	char testStr[] = "test";
+	const char srcStr[] = "";
+
+	//Act
+	size_t actual = Ncl::strCat(testStr, sizeof(testStr), srcStr, sizeof(srcStr));
+
+	//Assert
+	REQUIRE(expected == actual);
+	STR_EQUAL_REQUIRE("test", testStr);
+}
+
+TEST_CASE( "src c-string of length 4 appends into dest buffer of size 3 and returns 3", "[strCat]" )
+{
+	//Arrange
+	const size_t expected = 3;
+	char testStr[3] {};
+	const char srcStr[] = "test";
+
+	//Act
+	size_t actual = Ncl::strCat(testStr, sizeof(testStr), srcStr, sizeof(srcStr));
+
+	//Assert
+	REQUIRE(expected == actual);
+	STR_EQUAL_REQUIRE("te", testStr);
+}
+
+TEST_CASE( "src c-string of length 5 appends 3 characters into dest buffer of size 5 and returns 3", "[strCat]" )
+{
+	//Arrange
+	const size_t expected = 3;
+	char testStr[5] {};
+	const char srcStr[] = "test";
+
+	//Act
+	size_t actual = Ncl::strCat(testStr, sizeof(testStr), srcStr, sizeof(srcStr) - 2);
+
+	//Assert
+	REQUIRE(expected == actual);
+	STR_EQUAL_REQUIRE("te", testStr);
+}
+
+TEST_CASE( "null c-string returns 0", "[strCat]" )
+{
+	//Arrange
+	const size_t expected = 0;
+
+	//Act
+	size_t actual = Ncl::strCat(nullptr, 0, nullptr, 0);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "two src c-string of length 4 appends into dest buffer of size 9 and append both", "[strCat]" )
+{
+	//Arrange
+	const size_t expected = 8;
+	char testStr[9] {};
+	const char srcStr[] = "test";
+
+	//Act
+	size_t actual = Ncl::strCat(testStr, sizeof(testStr), srcStr, sizeof(srcStr));
+	actual += Ncl::strCat(testStr, sizeof(testStr), srcStr, sizeof(srcStr));
+
+	//Assert
+	REQUIRE(expected == actual);
+	STR_EQUAL_REQUIRE("testtest", testStr);
 }
 
 #pragma clang diagnostic pop

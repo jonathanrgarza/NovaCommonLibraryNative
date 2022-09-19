@@ -163,33 +163,46 @@ auto Ncl::strLength(const char *str, size_t strSize) -> size_t
 	return strSize;
 }
 
-auto Ncl::strCopy(char *dest, size_t destSize, const char *src, size_t srcSize) -> size_t
+auto Ncl::strCopy(char *dest, size_t destSize, const char *src, size_t maxCount) -> size_t
 {
 	if (dest == nullptr || destSize == 0)
 		return 0;
-	if (src == nullptr || srcSize == 0)
+	if (src == nullptr || maxCount == 0)
 		return 0;
 
-	size_t size = destSize < srcSize ? destSize : srcSize;
+	size_t size;
+	if (destSize < maxCount)
+	{
+		size = destSize;
+	}
+	else
+	{
+		size = maxCount;
+	}
 
+	int noNullCharFound = 1; //bool but left as int to allow just doing math later instead of if statement
 	size_t i;
 	for (i = 0; i < size; ++i)
 	{
 		const char& character = src[i];
 		if (character == '\0')
+		{
+			noNullCharFound = 0;
+			i++;
 			break;
+		}
 		dest[i] = character;
 	}
 
-	dest[i] = '\0';
-	return i;
+	dest[i - 1] = '\0';
+	return i - 1 + noNullCharFound;
 }
 
-auto Ncl::strCat(char *dest, size_t destSize, const char *src, size_t srcSize) -> size_t
+auto Ncl::strCat(char *dest, size_t destSize, const char *src, size_t maxCount) -> size_t
 {
 	if (dest == nullptr || destSize == 0)
 		return 0;
-	if (src == nullptr || srcSize == 0)
+	if (src == nullptr || maxCount == 0)
 		return 0;
 
 	if (src[0] == '\0')
@@ -202,17 +215,25 @@ auto Ncl::strCat(char *dest, size_t destSize, const char *src, size_t srcSize) -
 	if (remainingDestSize <= 1)
 		return 0;
 
-	size_t minSize = srcSize < remainingDestSize ? srcSize : remainingDestSize;
+	size_t minSize = maxCount < remainingDestSize ? maxCount : remainingDestSize;
 
+	int noNullCharFound = 1; //bool but left as int to allow just doing math later instead of if statement
 	size_t i;
 	for (i = 0; i < minSize; i++)
 	{
+		const char& character = src[i];
+		if (character == '\0')
+		{
+			noNullCharFound = 0;
+			i++;
+			break;
+		}
 		size_t destIndex = destLength + i;
-		dest[destIndex] = src[i];
+		dest[destIndex] = character;
 	}
 
-	dest[destLength + i] = '\0';
-	return i;
+	dest[destLength + i - 1] = '\0';
+	return i - 1 + noNullCharFound;
 }
 
 auto Ncl::strEquals(const char *firstStr, size_t firstStrSize, const char *secondStr, size_t secondStrSize) -> bool
