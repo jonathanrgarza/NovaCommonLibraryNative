@@ -18,8 +18,7 @@ const CCString TRUE_CCSTRING = CCString("true");
 const CCString FALSE_CCSTRING = CCString("false");
 
 constexpr CCString::CCString(const char *str, const size_t size, const bool dynamicPtr, const bool mallocPtr)
-		: _str(str),
-		  _size(size), _dynamicPtr(dynamicPtr), _mallocPtr(mallocPtr)
+		: _str(str), _size(size), _dynamicPtr(dynamicPtr), _mallocPtr(mallocPtr)
 {
 	if (str == nullptr)
 		return;

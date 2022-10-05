@@ -595,6 +595,216 @@ TEST_CASE( "c-strings with whitespace and letter case differences returns true",
 	REQUIRE(expected == actual);
 }
 
+TEST_CASE( "equal strings returns true", "[stringEqualsIc]" )
+{
+	//Arrange
+	const bool expected = true;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "test";
+
+	//Act
+	bool actual = Ncl::stringEqualsIc(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "not equal strings returns false", "[stringEqualsIc]" )
+{
+	//Arrange
+	const bool expected = false;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "testt";
+
+	//Act
+	bool actual = Ncl::stringEqualsIc(compareStr,compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "strings with letter case difference returns true", "[stringEqualsIc]" )
+{
+	//Arrange
+	const bool expected = true;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "TEST";
+
+	//Act
+	bool actual = Ncl::stringEqualsIc(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "strings with whitespace difference returns false", "[stringEqualsIc]" )
+{
+	//Arrange
+	const bool expected = false;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "test ";
+
+	//Act
+	bool actual = Ncl::stringEqualsIc(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "equal strings returns true", "[stringEqualsIws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "test";
+
+	//Act
+	bool actual = Ncl::stringEqualsIws(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "not equal strings returns false", "[stringEqualsIws]" )
+{
+	//Arrange
+	const bool expected = false;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "test t";
+
+	//Act
+	bool actual = Ncl::stringEqualsIws(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "empty string and whitespace string returns true", "[stringEqualsIws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const std::string compareStr = "";
+	const std::string compareStr2 = "     \t\n   ";
+
+	//Act
+	bool actual = Ncl::stringEqualsIws(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "strings with letter case difference returns false", "[stringEqualsIws]" )
+{
+	//Arrange
+	const bool expected = false;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "TEST";
+
+	//Act
+	bool actual = Ncl::stringEqualsIws(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "strings with whitespace difference returns true", "[stringEqualsIws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "test ";
+
+	//Act
+	bool actual = Ncl::stringEqualsIws(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "equal strings returns true", "[stringEqualsIcws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "test";
+
+	//Act
+	bool actual = Ncl::stringEqualsIcws(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "not equal strings returns false", "[stringEqualsIcws]" )
+{
+	//Arrange
+	const bool expected = false;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "test t";
+
+	//Act
+	bool actual = Ncl::stringEqualsIcws(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "empty string and whitespace string returns true", "[stringEqualsIcws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const std::string compareStr = "";
+	const std::string compareStr2 = "     \t\n   ";
+
+	//Act
+	bool actual = Ncl::stringEqualsIcws(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "strings with letter case difference returns true", "[stringEqualsIcws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "TEST";
+
+	//Act
+	bool actual = Ncl::stringEqualsIcws(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "strings with whitespace difference returns true", "[stringEqualsIcws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "test ";
+
+	//Act
+	bool actual = Ncl::stringEqualsIcws(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
+TEST_CASE( "strings with whitespace and letter case differences returns true", "[stringEqualsIcws]" )
+{
+	//Arrange
+	const bool expected = true;
+	const std::string compareStr = "test";
+	const std::string compareStr2 = "TESt ";
+
+	//Act
+	bool actual = Ncl::stringEqualsIcws(compareStr, compareStr2);
+
+	//Assert
+	REQUIRE(expected == actual);
+}
+
 TEST_CASE( "c-string with 1 character returns 1", "[strLength]" )
 {
 	//Arrange
