@@ -17,15 +17,6 @@ const CCString TRUE_CCSTRING = CCString("true");
 
 const CCString FALSE_CCSTRING = CCString("false");
 
-constexpr CCString::CCString(const char *str, const size_t size, const bool dynamicPtr, const bool mallocPtr)
-		: _str(str), _size(size), _dynamicPtr(dynamicPtr), _mallocPtr(mallocPtr)
-{
-	if (str == nullptr)
-		return;
-
-	_length = strnlen(str, size);
-}
-
 CCString::~CCString()
 {
 	if (!_dynamicPtr)
@@ -66,6 +57,16 @@ auto Ncl::operator<<(std::ostream &os, const CCString &str) -> std::ostream &
 
 	os << str._str;
 	return os;
+}
+
+auto CCString::operator==(const CCString &rhs) const -> bool
+{
+	return Ncl::strEquals(_str, _size, rhs._str, rhs._size);
+}
+
+auto CCString::operator!=(const CCString &rhs) const -> bool
+{
+	return !(rhs == *this);
 }
 
 CString::CString(char *str, const size_t size, const bool dynamicPtr, const bool mallocPtr) : _str(str),
@@ -118,6 +119,101 @@ auto CString::operator[](const size_t i) -> char &
 		throw std::out_of_range("i is greater than CString's size");
 
 	return _str[i];
+}
+
+#pragma warning(push)
+#pragma warning (disable : 4068 ) //Disable unknown paragmas
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "modernize-avoid-c-arrays"
+
+void CString::resize(const size_t size, const bool retainContents)
+{
+	const size_t oldSize = _size;
+	_size = size;
+	if (size == 0)
+	{
+		deletePtr();
+		return;
+	}
+
+	std::unique_ptr<char[]> newPtr;
+	if (_mallocPtr)
+	{
+		newPtr.reset(static_cast<char *>(malloc(sizeof(char) * size)));
+		newPtr.get()[0] = '\0';
+	} else {
+		newPtr = std::make_unique<char[]>(size);
+		newPtr.get()[0] = '\0';
+	}
+
+	if (retainContents)
+	{
+		const size_t min = std::min(oldSize, size);
+		strCopy(newPtr.get(), size, _str, min);
+	}
+
+	deletePtr();
+
+	_dynamicPtr = true;
+	_str = newPtr.release();
+}
+
+#pragma clang diagnostic pop
+#pragma warning(pop)
+
+void CString::copy(const char *ptr, const size_t size, const bool allowResizing)
+{
+	if (ptr == nullptr || size == 0)
+	{
+		if (!allowResizing)
+			throw std::invalid_argument("ptr can not be nullptr while copying with no resizing");
+
+		resize(0, false); //Will result in _str becoming a nullptr
+		return;
+	}
+
+	if (_size >= size)
+	{
+		strCopy(_str, _size, ptr, size);
+		return;
+	}
+
+	//Need bigger buffer
+	if (!allowResizing)
+		throw std::invalid_argument("ptr's size is greater than CString's size");
+
+	resize(size, true);
+	strCopy(_str, _size, ptr, size);
+}
+
+void CString::deletePtr()
+{
+	if (_str == nullptr)
+		return;
+
+	if (_dynamicPtr)
+	{
+		if (_mallocPtr)
+		{
+			free(_str);
+		}
+		else
+		{
+			delete[] _str;
+		}
+	}
+
+	_str = nullptr;
+}
+
+auto CString::operator==(const CString &rhs) const -> bool
+{
+	return Ncl::strEquals(_str, _size, rhs._str, rhs._size);
+}
+
+auto CString::operator!=(const CString &rhs) const -> bool
+{
+	return !(rhs == *this);
 }
 
 auto Ncl::operator<<(std::ostream &os, const CString &str) -> std::ostream &
@@ -924,7 +1020,7 @@ auto Ncl::strToBool(const char *str, size_t size, bool ignoreCase, bool looseMat
 	return false;
 }
 
-auto stringToBool(const std::string &str, bool ignoreCase, bool looseMatch) -> bool
+auto Ncl::stringToBool(const std::string &str, bool ignoreCase, bool looseMatch) -> bool
 {
 	if (str.length() == 0)
 		return false;
@@ -961,89 +1057,4 @@ auto stringToBool(const std::string &str, bool ignoreCase, bool looseMatch) -> b
 		return true;
 
 	return false;
-}
-
-#pragma warning(push)
-#pragma warning (disable : 4068 ) //Disable unknown paragmas
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "modernize-avoid-c-arrays"
-
-void CString::resize(const size_t size, const bool retainContents)
-{
-	const size_t oldSize = _size;
-	_size = size;
-	if (size == 0)
-	{
-		deletePtr();
-		return;
-	}
-
-	std::unique_ptr<char[]> newPtr;
-	if (_mallocPtr)
-	{
-		newPtr.reset(static_cast<char *>(malloc(sizeof(char) * size)));
-		newPtr.get()[0] = '\0';
-	} else {
-		newPtr = std::make_unique<char[]>(size);
-		newPtr.get()[0] = '\0';
-	}
-
-	if (retainContents)
-	{
-		const size_t min = std::min(oldSize, size);
-		strCopy(newPtr.get(), size, _str, min);
-	}
-
-	deletePtr();
-
-	_dynamicPtr = true;
-	_str = newPtr.release();
-}
-
-#pragma clang diagnostic pop
-#pragma warning(pop)
-
-void CString::copy(const char *ptr, const size_t size, const bool allowResizing)
-{
-	if (ptr == nullptr || size == 0)
-	{
-		if (!allowResizing)
-			throw std::invalid_argument("ptr can not be nullptr while copying with no resizing");
-
-		resize(0, false); //Will result in _str becoming a nullptr
-		return;
-	}
-
-	if (_size >= size)
-	{
-		strCopy(_str, _size, ptr, size);
-		return;
-	}
-
-	//Need bigger buffer
-	if (!allowResizing)
-		throw std::invalid_argument("ptr's size is greater than CString's size");
-
-	resize(size, true);
-	strCopy(_str, _size, ptr, size);
-}
-
-void CString::deletePtr()
-{
-	if (_str == nullptr)
-		return;
-
-	if (_dynamicPtr)
-	{
-		if (_mallocPtr)
-		{
-			free(_str);
-		}
-		else
-		{
-			delete[] _str;
-		}
-	}
-
-	_str = nullptr;
 }

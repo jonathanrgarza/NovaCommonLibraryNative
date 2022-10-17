@@ -62,7 +62,7 @@ TEST_CASE( "String with beginning spaces has it removed", "[strTrimLeft]" )
 	Ncl::strTrimLeft(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "String with beginning tabs has it removed", "[strTrimLeft]" )
@@ -75,7 +75,7 @@ TEST_CASE( "String with beginning tabs has it removed", "[strTrimLeft]" )
 	Ncl::strTrimLeft(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "String with beginning newlines has it removed", "[strTrimLeft]" )
@@ -88,7 +88,7 @@ TEST_CASE( "String with beginning newlines has it removed", "[strTrimLeft]" )
 	Ncl::strTrimLeft(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "String with all whitespace returns empty string", "[strTrimLeft]" )
@@ -101,7 +101,7 @@ TEST_CASE( "String with all whitespace returns empty string", "[strTrimLeft]" )
 	Ncl::strTrimLeft(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "String with text content returns the same", "[strTrimLeft]" )
@@ -114,7 +114,7 @@ TEST_CASE( "String with text content returns the same", "[strTrimLeft]" )
 	Ncl::strTrimLeft(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "Null string returns the same", "[strTrimLeft]" )
@@ -140,7 +140,7 @@ TEST_CASE( "String with ending spaces has it removed", "[strTrimRight]" )
 	Ncl::strTrimRight(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "String with ending tabs has it removed", "[strTrimRight]" )
@@ -153,7 +153,7 @@ TEST_CASE( "String with ending tabs has it removed", "[strTrimRight]" )
 	Ncl::strTrimRight(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "String with ending newlines has it removed", "[strTrimRight]" )
@@ -166,7 +166,7 @@ TEST_CASE( "String with ending newlines has it removed", "[strTrimRight]" )
 	Ncl::strTrimRight(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "String with all whitespace returns empty string", "[strTrimRight]" )
@@ -179,7 +179,7 @@ TEST_CASE( "String with all whitespace returns empty string", "[strTrimRight]" )
 	Ncl::strTrimRight(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "String with text content returns the same", "[strTrimRight]" )
@@ -192,7 +192,7 @@ TEST_CASE( "String with text content returns the same", "[strTrimRight]" )
 	Ncl::strTrimRight(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "Null string returns the same", "[strTrimRight]" )
@@ -218,7 +218,7 @@ TEST_CASE( "String with beginning and ending spaces has it removed", "[strTrim]"
 	Ncl::strTrim(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "String with beginning and ending tabs has it removed", "[strTrim]" )
@@ -231,7 +231,7 @@ TEST_CASE( "String with beginning and ending tabs has it removed", "[strTrim]" )
 	Ncl::strTrim(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "String with beginning and ending newlines has it removed", "[strTrim]" )
@@ -244,7 +244,7 @@ TEST_CASE( "String with beginning and ending newlines has it removed", "[strTrim
 	Ncl::strTrim(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "String with all whitespace returns empty string", "[strTrim]" )
@@ -257,7 +257,7 @@ TEST_CASE( "String with all whitespace returns empty string", "[strTrim]" )
 	Ncl::strTrim(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "String with text content returns the same", "[strTrim]" )
@@ -270,7 +270,7 @@ TEST_CASE( "String with text content returns the same", "[strTrim]" )
 	Ncl::strTrim(actual, sizeof(actual));
 
 	//Assert
-	STR_EQUAL_REQUIRE(expected, actual);
+	STR_EQUAL_LIT_REQUIRE(expected, actual);
 }
 
 TEST_CASE( "Null string returns the same", "[strTrim]" )
@@ -683,7 +683,7 @@ TEST_CASE( "empty string and whitespace string returns true", "[stringEqualsIws]
 {
 	//Arrange
 	const bool expected = true;
-	const std::string compareStr = "";
+	const std::string compareStr;
 	const std::string compareStr2 = "     \t\n   ";
 
 	//Act
@@ -753,7 +753,7 @@ TEST_CASE( "empty string and whitespace string returns true", "[stringEqualsIcws
 {
 	//Arrange
 	const bool expected = true;
-	const std::string compareStr = "";
+	const std::string compareStr;
 	const std::string compareStr2 = "     \t\n   ";
 
 	//Act
@@ -871,7 +871,7 @@ TEST_CASE( "src c-string of length 4 copies into dest buffer of size 5 and retur
 
 	//Assert
 	REQUIRE(expected == actual);
-	STR_EQUAL_REQUIRE("test", testStr);
+	STR_EQUAL_LIT_REQUIRE("test", testStr);
 }
 
 TEST_CASE( "src c-string of length 0 copies into dest buffer of size 5 and returns 0", "[strCopy]" )
@@ -886,7 +886,7 @@ TEST_CASE( "src c-string of length 0 copies into dest buffer of size 5 and retur
 
 	//Assert
 	REQUIRE(expected == actual);
-	STR_EQUAL_REQUIRE("", testStr);
+	STR_EQUAL_LIT_REQUIRE("", testStr);
 }
 
 TEST_CASE( "src c-string of length 4 copies into dest buffer of size 3 and returns 3", "[strCopy]" )
@@ -901,7 +901,7 @@ TEST_CASE( "src c-string of length 4 copies into dest buffer of size 3 and retur
 
 	//Assert
 	REQUIRE(expected == actual);
-	STR_EQUAL_REQUIRE("te", testStr);
+	STR_EQUAL_LIT_REQUIRE("te", testStr);
 }
 
 TEST_CASE( "src c-string of length 5 copies 3 characters into dest buffer of size 5 and returns 3", "[strCopy]" )
@@ -916,7 +916,7 @@ TEST_CASE( "src c-string of length 5 copies 3 characters into dest buffer of siz
 
 	//Assert
 	REQUIRE(expected == actual);
-	STR_EQUAL_REQUIRE("te", testStr);
+	STR_EQUAL_LIT_REQUIRE("te", testStr);
 }
 
 TEST_CASE( "null c-string returns 0", "[strCopy]" )
@@ -943,7 +943,7 @@ TEST_CASE( "src c-string of length 4 appends into dest buffer of size 5 and retu
 
 	//Assert
 	REQUIRE(expected == actual);
-	STR_EQUAL_REQUIRE("test", testStr);
+	STR_EQUAL_LIT_REQUIRE("test", testStr);
 }
 
 TEST_CASE( "src c-string of length 0 appends into dest buffer of size 5 and returns 0", "[strCat]" )
@@ -958,7 +958,7 @@ TEST_CASE( "src c-string of length 0 appends into dest buffer of size 5 and retu
 
 	//Assert
 	REQUIRE(expected == actual);
-	STR_EQUAL_REQUIRE("test", testStr);
+	STR_EQUAL_LIT_REQUIRE("test", testStr);
 }
 
 TEST_CASE( "src c-string of length 4 appends into dest buffer of size 3 and returns 3", "[strCat]" )
@@ -973,7 +973,7 @@ TEST_CASE( "src c-string of length 4 appends into dest buffer of size 3 and retu
 
 	//Assert
 	REQUIRE(expected == actual);
-	STR_EQUAL_REQUIRE("te", testStr);
+	STR_EQUAL_LIT_REQUIRE("te", testStr);
 }
 
 TEST_CASE( "src c-string of length 5 appends 3 characters into dest buffer of size 5 and returns 3", "[strCat]" )
@@ -988,7 +988,7 @@ TEST_CASE( "src c-string of length 5 appends 3 characters into dest buffer of si
 
 	//Assert
 	REQUIRE(expected == actual);
-	STR_EQUAL_REQUIRE("te", testStr);
+	STR_EQUAL_LIT_REQUIRE("te", testStr);
 }
 
 TEST_CASE( "null c-string returns 0", "[strCat]" )
@@ -1016,7 +1016,36 @@ TEST_CASE( "two src c-string of length 4 appends into dest buffer of size 9 and 
 
 	//Assert
 	REQUIRE(expected == actual);
-	STR_EQUAL_REQUIRE("testtest", testStr);
+	STR_EQUAL_LIT_REQUIRE("testtest", testStr);
+}
+
+TEST_CASE( "Instance is created with string content", "[CCString::cotr]" )
+{
+	//Arrange
+	const char srcStr[] = "test";
+
+	//Act
+	Ncl::CCString actual(srcStr, sizeof(srcStr));
+
+	//Assert
+	STR_EQUAL_REQUIRE("test", sizeof("test"), actual.str(), actual.size());
+}
+
+
+
+
+TEST_CASE( "Instance is created with string content", "[CString::cotr]" )
+{
+	//Arrange
+	const size_t arraySize = 5;
+	std::unique_ptr<char[]> srcStr(new char[arraySize]);
+	Ncl::strCopy(srcStr.get(), arraySize, "test");
+
+	//Act
+	Ncl::CString actual(srcStr.get(), arraySize);
+
+	//Assert
+	STR_EQUAL_REQUIRE("test", sizeof("test"), actual.str(), actual.size());
 }
 
 #pragma clang diagnostic pop

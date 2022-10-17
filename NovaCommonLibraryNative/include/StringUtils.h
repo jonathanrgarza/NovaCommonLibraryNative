@@ -325,7 +325,15 @@ namespace Ncl
 		static const CCString Null;
 		static const CCString Empty;
 
-		constexpr CCString(const char *str, size_t size, bool dynamicPtr = false, bool mallocPtr = false);
+		constexpr CCString(const char *str, size_t size, bool dynamicPtr = false, bool mallocPtr = false) : _str(str),
+			_size(size), _dynamicPtr(dynamicPtr), _mallocPtr(mallocPtr)
+		{
+			// constexpr forces this constructor to be inlined
+			if (str == nullptr)
+				return;
+
+			_length = strnlen(str, size);
+		}
 
 		template<std::size_t N>
 		constexpr explicit CCString(const char(&str)[N]) : _str(str), _size(N), _dynamicPtr(false), _mallocPtr(false)
@@ -350,6 +358,10 @@ namespace Ncl
 		NCL_NODISCARD auto operator[](size_t i) const -> const char &;
 
 		friend auto operator<<(std::ostream &os, const CCString &str) -> std::ostream &;
+
+		auto operator==(const CCString &rhs) const -> bool;
+
+		auto operator!=(const CCString &rhs) const -> bool;
 
 	private:
 		const char *_str;
@@ -414,6 +426,10 @@ namespace Ncl
 		NCL_NODISCARD auto operator[](size_t i) -> char &;
 
 		friend auto operator<<(std::ostream &os, const CString &str) -> std::ostream &;
+
+		auto operator==(const CString &rhs) const -> bool;
+
+		auto operator!=(const CString &rhs) const -> bool;
 
 	private:
 		void deletePtr();
