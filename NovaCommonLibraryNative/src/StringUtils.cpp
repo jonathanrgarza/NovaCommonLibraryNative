@@ -39,6 +39,13 @@ CCString::~CCString()
 const CCString CCString::Null(nullptr, 0);
 const CCString CCString::Empty(EMPTY_STR);
 
+auto CCString::release() -> const char *
+{
+    const char* ptr = _str;
+    _str = nullptr;
+    return ptr;
+}
+
 auto CCString::operator[](const size_t i) const -> const char &
 {
 	if (i >= _size)
@@ -184,6 +191,13 @@ void CString::copy(const char *ptr, const size_t size, const bool allowResizing)
 
 	resize(size, true);
 	strCopy(_str, _size, ptr, size);
+}
+
+auto CString::release() -> char *
+{
+    char* ptr = _str;
+    _str = nullptr;
+    return ptr;
 }
 
 void CString::deletePtr()

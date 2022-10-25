@@ -1022,17 +1022,107 @@ TEST_CASE( "two src c-string of length 4 appends into dest buffer of size 9 and 
 TEST_CASE( "Instance is created with string content", "[CCString::cotr]" )
 {
 	//Arrange
+    const size_t srcSize = sizeof("test");
 	const char srcStr[] = "test";
 
 	//Act
-	Ncl::CCString actual(srcStr, sizeof(srcStr));
+	const Ncl::CCString actual(srcStr, srcSize);
 
 	//Assert
-	STR_EQUAL_REQUIRE("test", sizeof("test"), actual.str(), actual.size());
+	STR_EQUAL_REQUIRE("test", srcSize, actual.str(), actual.size());
+    REQUIRE(srcSize == actual.size());
+    REQUIRE(srcSize - 1 == actual.length());
 }
 
+TEST_CASE( "Instance is created with NULL content", "[CCString::cotr]" )
+{
+    //Arrange
+    //Act
+    const Ncl::CCString actual(nullptr, 0);
 
+    //Assert
+    REQUIRE(true == actual.isNull());
+    REQUIRE(false == actual.isEmpty());
+    REQUIRE(true == actual.isNullOrEmpty());
+    REQUIRE(0 == actual.length());
+}
 
+TEST_CASE( "Instance is created with empty content", "[CCString::cotr]" )
+{
+    //Arrange
+    const size_t srcSize = sizeof("");
+    const char srcStr[] = "";
+
+    //Act
+    const Ncl::CCString actual(srcStr, srcSize);
+
+    //Assert
+    REQUIRE(false == actual.isNull());
+    REQUIRE(true == actual.isEmpty());
+    REQUIRE(true == actual.isNullOrEmpty());
+    REQUIRE(0 == actual.length());
+}
+
+TEST_CASE( "Exists and is set to null", "[CCString::Null]" )
+{
+    //Arrange
+    //Act
+    const Ncl::CCString actual = Ncl::CCString::Null;
+
+    //Assert
+    REQUIRE(true == actual.isNull());
+    REQUIRE(false == actual.isEmpty());
+    REQUIRE(true == actual.isNullOrEmpty());
+    REQUIRE(0 == actual.length());
+}
+
+TEST_CASE( "Exists and is set to an empty string", "[CCString::Empty]" )
+{
+    //Arrange
+    //Act
+    const Ncl::CCString actual = Ncl::CCString::Empty;
+
+    //Assert
+    REQUIRE(false == actual.isNull());
+    REQUIRE(true == actual.isEmpty());
+    REQUIRE(true == actual.isNullOrEmpty());
+    REQUIRE(0 == actual.length());
+}
+
+TEST_CASE( "Equal strings returns true", "[CCString::==]" )
+{
+    //Arrange
+    const size_t srcSize = sizeof("test");
+    const char srcStr1[] = "test";
+    const char srcStr2[] = "test";
+
+    //Act
+    const Ncl::CCString instance1(srcStr1, srcSize);
+    const Ncl::CCString instance2(srcStr2, srcSize);
+    
+    bool actual = instance1 == instance2;
+
+    //Assert
+    REQUIRE(true == actual);
+}
+
+TEST_CASE( "Not equal strings returns true", "[CCString::!=]" )
+{
+    //Arrange
+    const size_t srcSize1 = sizeof("test");
+    const size_t srcSize2 = sizeof("test2");
+    const char srcStr1[] = "test";
+    const char srcStr2[] = "test2";
+
+    //Act
+    const Ncl::CCString instance1(srcStr1, srcSize1);
+    const Ncl::CCString instance2(srcStr2, srcSize2);
+
+    bool actual = instance1 != instance2;
+
+    //Assert
+    REQUIRE(true == actual);
+}
 
 TEST_CASE( "Instance is created with string content", "[CString::cotr]" )
 {
@@ -1042,10 +1132,99 @@ TEST_CASE( "Instance is created with string content", "[CString::cotr]" )
 	Ncl::strCopy(srcStr.get(), arraySize, "test");
 
 	//Act
-	Ncl::CString actual(srcStr.get(), arraySize);
-
+	const Ncl::CString actual(srcStr.get(), arraySize);
+    srcStr.release();
+    
 	//Assert
-	STR_EQUAL_REQUIRE("test", sizeof("test"), actual.str(), actual.size());
+	STR_EQUAL_REQUIRE("test", arraySize, actual.str(), actual.size());
+    REQUIRE(arraySize == actual.size());
+    REQUIRE(arraySize - 1 == actual.length());
+}
+
+TEST_CASE( "Instance is created with NULL content", "[CString::cotr]" )
+{
+    //Arrange
+    //Act
+    const Ncl::CString actual(nullptr, 0);
+
+    //Assert
+    REQUIRE(true == actual.isNull());
+    REQUIRE(false == actual.isEmpty());
+    REQUIRE(true == actual.isNullOrEmpty());
+    REQUIRE(0 == actual.length());
+}
+
+TEST_CASE( "Instance is created with empty content", "[CString::cotr]" )
+{
+    //Arrange
+    const size_t arraySize = 1;
+    std::unique_ptr<char[]> srcStr(new char[arraySize]);
+    Ncl::strCopy(srcStr.get(), arraySize, "");
+
+    //Act
+    const Ncl::CString actual(srcStr.get(), arraySize);
+    srcStr.release();
+
+    //Assert
+    REQUIRE(false == actual.isNull());
+    REQUIRE(true == actual.isEmpty());
+    REQUIRE(true == actual.isNullOrEmpty());
+    REQUIRE(0 == actual.length());
+}
+
+TEST_CASE( "Exists and is set to null", "[CString::Null]" )
+{
+    //Arrange
+    //Act
+    const Ncl::CString actual = Ncl::CString::Null;
+
+    //Assert
+    REQUIRE(true == actual.isNull());
+    REQUIRE(false == actual.isEmpty());
+    REQUIRE(true == actual.isNullOrEmpty());
+    REQUIRE(0 == actual.length());
+}
+
+TEST_CASE( "Equal strings return true", "[CString::==]" )
+{
+    //Arrange
+    const size_t arraySize = 5;
+    std::unique_ptr<char[]> srcStr1(new char[arraySize]);
+    Ncl::strCopy(srcStr1.get(), arraySize, "test");
+
+    std::unique_ptr<char[]> srcStr2(new char[arraySize]);
+    Ncl::strCopy(srcStr2.get(), arraySize, "test");
+
+    //Act
+    const Ncl::CString instance1(srcStr1.get(), arraySize);
+    const Ncl::CString instance2(srcStr2.get(), arraySize);
+    srcStr1.release();
+    srcStr2.release();
+    bool actual = instance1 == instance2;
+
+    //Assert
+    REQUIRE(true == actual);
+}
+
+TEST_CASE( "Not equal strings return true", "[CString::!=]" )
+{
+    //Arrange
+    const size_t arraySize = 6;
+    std::unique_ptr<char[]> srcStr1(new char[arraySize]);
+    Ncl::strCopy(srcStr1.get(), arraySize, "test");
+
+    std::unique_ptr<char[]> srcStr2(new char[arraySize]);
+    Ncl::strCopy(srcStr2.get(), arraySize, "test2");
+
+    //Act
+    const Ncl::CString instance1(srcStr1.get(), arraySize);
+    const Ncl::CString instance2(srcStr2.get(), arraySize);
+    srcStr1.release();
+    srcStr2.release();
+    bool actual = instance1 != instance2;
+
+    //Assert
+    REQUIRE(true == actual);
 }
 
 #pragma clang diagnostic pop

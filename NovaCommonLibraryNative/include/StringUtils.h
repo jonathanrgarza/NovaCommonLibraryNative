@@ -355,6 +355,8 @@ namespace Ncl
 
 		NCL_NODISCARD constexpr auto length() const -> size_t { return _length; }
 
+        NCL_NODISCARD auto release() -> const char *;
+
 		NCL_NODISCARD auto operator[](size_t i) const -> const char &;
 
 		friend auto operator<<(std::ostream &os, const CCString &str) -> std::ostream &;
@@ -364,7 +366,7 @@ namespace Ncl
 		auto operator!=(const CCString &rhs) const -> bool;
 
 	private:
-		const char *_str;
+		const char* _str;
 		const size_t _size;
 		const bool _dynamicPtr; // NOLINT(modernize-use-default-member-init)
 		const bool _mallocPtr; // NOLINT(modernize-use-default-member-init)
@@ -420,6 +422,8 @@ namespace Ncl
 		void resize(size_t size, bool retainContents = true);
 
 		void copy(const char *ptr, size_t size, bool allowResizing = false);
+
+        NCL_NODISCARD auto release() -> char *;
 
 		NCL_NODISCARD auto operator[](size_t i) const -> const char &;
 
